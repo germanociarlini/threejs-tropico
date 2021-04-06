@@ -14,20 +14,25 @@ export class Scene extends React.Component {
   private pmremGenerator: THREE.PMREMGenerator
 
   private sunParams = {
-    inclination: 0.49,
-    azimuth: 0.205
+    inclination: 0.492,
+    azimuth: 0.220
   }
+
+  private mouseX: number
+  private mouseY: number
 
   constructor(props: any) {
     super(props)
     this.handleOnLoad = this.handleOnLoad.bind(this)
     this.handleWindowResize = this.handleWindowResize.bind(this)
+    this.handleMouseMove = this.handleMouseMove.bind(this)
     this.animate = this.animate.bind(this)
   }
 
   public componentDidMount() {
     window.addEventListener('load', this.handleOnLoad)
     window.addEventListener('resize', this.handleWindowResize)
+    window.addEventListener('mousemove', this.handleMouseMove)
   }
 
   public componentWillUnmount() {
@@ -51,8 +56,15 @@ export class Scene extends React.Component {
     this.renderer.setSize(window.innerWidth, window.innerHeight)
   }
 
+  private handleMouseMove(event: MouseEvent) {
+    this.mouseX = event.clientX
+    this.mouseY = event.clientY
+  }
+
   private initializeRenderer(container: HTMLElement) {
-    this.renderer = new THREE.WebGLRenderer()
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true
+    })
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -123,7 +135,8 @@ export class Scene extends React.Component {
   }
 
   private renderFrame() {
-
+    this.camera.rotation.x = (this.mouseY * 0.0001) * -1;
+    this.camera.rotation.y = (this.mouseX * 0.0001) * -1;
     (this.ocean.material as THREE.ShaderMaterial).uniforms['time'].value += 1.0/60.0
 
     this.renderer.render(this.scene, this.camera)
