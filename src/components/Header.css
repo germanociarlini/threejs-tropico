@@ -1,0 +1,29 @@
+.header {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: baseline;
+  background-color: black;
+  color: beige;
+  width: 100vw;
+  min-height: 40px;
+  cursor: default;
+}
+
+.logo {
+  font-size: 2em;
+  font-family: 'Dancing Script', cursive;
+  margin-right: 1em;
+}
+
+.header-sections {
+  display: flex;
+  min-width: 300px;
+  justify-content: space-between;
+  text-transform: lowercase;
+}
+
+.header-section:hover {
+  background-color: beige;
+  color: black;
+}

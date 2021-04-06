@@ -5,24 +5,21 @@
   height: 100%;
 }
 
-.content {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .intro {
+  position: absolute;
+  top: 30%;
+  right: 10%;
   display: grid;
   text-align: center;
 }
 
 .main {
-  font-size: 6em;
+  font-size: 9em;
   font-family: 'Dancing Script', cursive;
 }
 
 .sub {
-  font-size: 1em;
+  font-size: 2em;
   text-transform: uppercase;
   font-family: 'Zilla Slab Highlight', cursive;
 }
