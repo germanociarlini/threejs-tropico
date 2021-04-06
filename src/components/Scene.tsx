@@ -2,6 +2,7 @@ import React from "react";
 import * as THREE from "three";
 import { Water } from "three/examples/jsm/objects/Water.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
+import './Scene.css';
 
 export class Scene extends React.Component {
   private renderer: THREE.WebGLRenderer
@@ -99,7 +100,7 @@ export class Scene extends React.Component {
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
       })
     })
-    this.ocean.rotation.x = -Math.PI/2
+    this.ocean.rotation.x = -Math.PI / 2
     this.scene.add(this.ocean)
   }
 
@@ -137,12 +138,12 @@ export class Scene extends React.Component {
   private renderFrame() {
     this.camera.rotation.x = (this.mouseY * 0.0001) * -1;
     this.camera.rotation.y = (this.mouseX * 0.0001) * -1;
-    (this.ocean.material as THREE.ShaderMaterial).uniforms['time'].value += 1.0/60.0
+    (this.ocean.material as THREE.ShaderMaterial).uniforms['time'].value += 1.0 / 60.0
 
     this.renderer.render(this.scene, this.camera)
   }
 
   render() {
-    return <div id="scene-container"></div>;
+    return (<div id="scene-container"></div>);
   }
 }
