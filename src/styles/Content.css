@@ -1,0 +1,56 @@
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.content::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
+
+.fwh-slide {
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 5%;
+}
+
+.stick-right {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.intro {
+  display: grid;
+  text-align: center;
+  height: fit-content;
+}
+
+.title {
+  font-size: 9em;
+  font-family: "Dancing Script", cursive;
+}
+
+.subtitle {
+  font-size: 2em;
+  text-transform: uppercase;
+  font-family: "Zilla Slab Highlight", cursive;
+}
+
+.destinations {
+  background-color: black;
+  opacity: 80%;
+  height: 100%;
+  padding: 30px;
+}
+
+.destinations .title {
+  color: white;
+  font-size: 6em;
+}
