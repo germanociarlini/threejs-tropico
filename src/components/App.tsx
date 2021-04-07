@@ -1,20 +1,15 @@
 import React from 'react';
-import { Scene } from '../components/Scene'
-import { Header } from '../components/Header'
-import './App.css'
+import { Header } from '../components/Header';
+import { Scene } from '../components/Scene';
+import '../styles/App.css';
+import { Intro } from './Intro';
 
 function App() {
   return (
     <div className='container'>
       <Scene />
-      <div>
-        <Header/>
-        <div className='intro'>
-          <span className='main'>Tropico</span>
-          <span className='sub'>Flying made easy.</span>
-          <span>@germanociarlini</span>
-        </div>
-      </div>
+      <Header />
+      <Intro />
     </div>
   );
 }

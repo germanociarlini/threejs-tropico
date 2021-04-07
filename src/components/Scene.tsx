@@ -2,7 +2,6 @@ import React from "react";
 import * as THREE from "three";
 import { Water } from "three/examples/jsm/objects/Water.js";
 import { Sky } from "three/examples/jsm/objects/Sky.js";
-import './Scene.css';
 
 export class Scene extends React.Component {
   private renderer: THREE.WebGLRenderer
