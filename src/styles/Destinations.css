@@ -1,0 +1,11 @@
+.destinations {
+  background-color: black;
+  opacity: 80%;
+  height: 100%;
+  padding: 30px;
+}
+
+.destinations .title {
+  color: white;
+  font-size: 6em;
+}

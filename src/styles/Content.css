@@ -7,10 +7,11 @@
   scroll-behavior: smooth;
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
-.content::-webkit-scrollbar { /* WebKit */
+.content::-webkit-scrollbar {
+  /* WebKit */
   width: 0;
   height: 0;
 }
@@ -25,33 +26,4 @@
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-}
-
-.intro {
-  display: grid;
-  text-align: center;
-  height: fit-content;
-}
-
-.title {
-  font-size: 9em;
-  font-family: "Dancing Script", cursive;
-}
-
-.subtitle {
-  font-size: 2em;
-  text-transform: uppercase;
-  font-family: "Zilla Slab Highlight", cursive;
-}
-
-.destinations {
-  background-color: black;
-  opacity: 80%;
-  height: 100%;
-  padding: 30px;
-}
-
-.destinations .title {
-  color: white;
-  font-size: 6em;
 }
