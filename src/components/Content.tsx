@@ -5,7 +5,7 @@ export class Content extends React.Component {
   render() {
     return (
       <main className='content'>
-        <section className='fwh-slide stick-right'>
+        <section id='home' className='fwh-slide stick-right'>
           <div className="intro">
             <span className='title'>Tropico</span>
             <span className='subtitle'>Flying made easy.</span>
@@ -13,7 +13,7 @@ export class Content extends React.Component {
           </div>
         </section>
 
-        <section className='fwh-slide'>
+        <section id='destinations' className='fwh-slide'>
           <div className="destinations">
             <span className='title'>Destinations</span>
           </div>

@@ -7,7 +7,6 @@
   color: beige;
   width: 100vw;
   min-height: 40px;
-  cursor: default;
   z-index: 2;
 }
 
@@ -27,4 +26,8 @@
 .header-section:hover {
   background-color: beige;
   color: black;
+}
+
+.header-section {
+  color: beige;
 }
