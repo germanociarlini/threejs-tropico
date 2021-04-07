@@ -37,7 +37,8 @@ export class Scene extends React.Component {
 
   public componentWillUnmount() {
     window.removeEventListener('load', this.handleOnLoad);
-    window.addEventListener('resize', this.handleWindowResize)
+    window.removeEventListener('resize', this.handleWindowResize)
+    window.removeEventListener('mousemove', this.handleMouseMove)
   }
 
   private handleOnLoad() {
