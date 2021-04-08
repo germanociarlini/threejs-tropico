@@ -1,5 +1,6 @@
 import React from "react";
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import '../styles/Destinations.css';
 
 export class Destinations extends React.Component {
@@ -7,6 +8,7 @@ export class Destinations extends React.Component {
   private renderer: THREE.WebGLRenderer
   private scene: THREE.Scene
   private camera: THREE.PerspectiveCamera
+  private controls: OrbitControls
 
   private globeContainer: HTMLElement
   private innerWidth = 1
@@ -37,6 +39,7 @@ export class Destinations extends React.Component {
       this.globeContainer = container
       this.initializeRenderer()
       this.setupScene()
+      this.setupLights()
       this.initializeEarth()
       this.animate()
     }
@@ -70,11 +73,14 @@ export class Destinations extends React.Component {
 
   private setupScene() {
     this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera(55, this.innerWidth / this.innerHeight, 0.1, 5)
+    this.camera = new THREE.PerspectiveCamera(55, this.innerWidth / this.innerHeight, 0.01, 5)
     this.camera.position.set(0, 0, 2)
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1)
-    this.scene.add(ambientLight)
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+    this.controls.minDistance = .6
+    this.controls.maxDistance = 5
+    this.controls.enableDamping = true
+    this.controls.update()
   }
 
   private initializeEarth() {
@@ -83,10 +89,27 @@ export class Destinations extends React.Component {
     const earthMaterial = new THREE.MeshPhongMaterial({
       map: textureLoader.load('textures/earth-albedo.jpg'),
       bumpMap: textureLoader.load('textures/earth-bump.jpg'),
-      specularMap: textureLoader.load('textures/earth-specular.jpg')
+      bumpScale: .8,
+      specularMap: textureLoader.load('textures/earth-specular.jpg'),
     })
     this.earthMesh = new THREE.Mesh(earthGeometry, earthMaterial)
     this.scene.add(this.earthMesh)
+  }
+
+  private setupLights() {
+    const xCoords = [2, -2]
+    const yCoords = [2, -2]
+    const zCoords = [2, -2]
+
+    xCoords.forEach((x: number) => {
+      yCoords.forEach((y: number) => {
+        zCoords.forEach((z: number) => {
+          const pointLight = new THREE.PointLight(0xffffff, .5)
+          pointLight.position.set(x, y, z)
+          this.scene.add(pointLight)
+        })
+      })
+    })
   }
 
   private animate() {
@@ -95,7 +118,7 @@ export class Destinations extends React.Component {
   }
 
   private renderFrame() {
-    this.earthMesh.rotation.y -= 0.001
+    this.controls.update()
     this.renderer.render(this.scene, this.camera)
   }
 
