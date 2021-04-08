@@ -1,0 +1,35 @@
+{
+  "locations": [
+    {
+      "name": "Fortaleza",
+      "title": "City of the Sun",
+      "overview": "Fortaleza is the state capital of Ceará, located in Northeastern Brazil. It is Brazil's 5th largest city and the twelfth richest city in the country in GDP. According to the Ministry of Tourism, the city reached the mark of second most desired destination of Brazil and fourth among Brazilian cities in tourists received.",
+      "climate": "tropical",
+      "budget": "medium",
+      "main-attractions": [
+        "Urban beaches",
+        "Cuisine",
+        "Culture"
+      ],
+      "coordinates": {
+        "latitude": -3.71839,
+        "longitude": -38.5434
+      }
+    },
+    {
+      "name": "London",
+      "title": "Domine dirige nos",
+      "overview": "London is the capital and largest city of England and the United Kingdom. It is one of the leading tourist destinations in the world and in 2015 was ranked as the most visited city in the world with over 65 million visits. Tourism is one of London's prime industries, and as of 2016 London was the world top city destination as ranked by TripAdvisor users.",
+      "climate": "temperate oceanic",
+      "main-attractions": [
+        "Museums",
+        "Art",
+        "History"
+      ],
+      "coordinates": {
+        "latitude": 51.509865,
+        "longitude": -0.118092
+      }
+    }
+  ]
+}

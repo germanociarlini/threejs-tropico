@@ -17,11 +17,6 @@
   height: 100%;
 }
 
-#globe-container {
-  background-color: white;
-  border-radius: 2px;
-}
-
 .info-container {
   background-color: orange;
   border-radius: 2px;
