@@ -3,7 +3,6 @@
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.76);
   height: 100%;
-  padding: 30px;
   border-radius: 8px;
 }
 
@@ -13,21 +12,16 @@
 }
 
 .destinations-content {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 400px auto;
 }
 
 #globe-container {
-  flex-grow: 1;
   background-color: white;
   border-radius: 2px;
-  width: 0; /* Overriding flexbox dynamic width so the THREE renderer doesn't overflow */
 }
 
 .info-container {
-  flex-grow: 2;
   background-color: orange;
   border-radius: 2px;
 }

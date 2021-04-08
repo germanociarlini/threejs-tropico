@@ -95,6 +95,7 @@ export class Destinations extends React.Component {
   }
 
   private renderFrame() {
+    this.earthMesh.rotation.y -= 0.001
     this.renderer.render(this.scene, this.camera)
   }
 
