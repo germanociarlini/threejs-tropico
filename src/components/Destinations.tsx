@@ -86,11 +86,16 @@ export class Destinations extends React.Component {
   private initializeEarth() {
     const textureLoader = new THREE.TextureLoader()
     const earthGeometry = new THREE.SphereBufferGeometry(0.5, 64, 64)
+    // ref: https://github.com/mrdoob/three.js/blob/master/examples/misc_controls_fly.html
     const earthMaterial = new THREE.MeshPhongMaterial({
-      map: textureLoader.load('textures/earth-albedo.jpg'),
-      bumpMap: textureLoader.load('textures/earth-bump.jpg'),
-      bumpScale: .8,
-      specularMap: textureLoader.load('textures/earth-specular.jpg'),
+      specular: 0x333333,
+      shininess: 15,
+      map: textureLoader.load("textures/earth_atmos_2048.jpg"),
+      specularMap: textureLoader.load("textures/earth_specular_2048.jpg"),
+      normalMap: textureLoader.load("textures/earth_normal_2048.jpg"),
+
+      // y scale is negated to compensate for normal map handedness.
+      normalScale: new THREE.Vector2(0.85, - 0.85)
     })
     this.earthMesh = new THREE.Mesh(earthGeometry, earthMaterial)
     this.scene.add(this.earthMesh)
@@ -104,7 +109,7 @@ export class Destinations extends React.Component {
     xCoords.forEach((x: number) => {
       yCoords.forEach((y: number) => {
         zCoords.forEach((z: number) => {
-          const pointLight = new THREE.PointLight(0xffffff, .5)
+          const pointLight = new THREE.PointLight(0xffffff, .7)
           pointLight.position.set(x, y, z)
           this.scene.add(pointLight)
         })
