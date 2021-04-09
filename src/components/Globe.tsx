@@ -10,11 +10,6 @@ export class Globe extends React.Component {
   private scene: THREE.Scene
   private camera: THREE.PerspectiveCamera
   private controls: OrbitControls
-
-  private globeContainer: HTMLElement
-  private innerWidth = 1
-  private innerHeight = 1
-
   private earthMesh: THREE.Mesh
 
   constructor(props: any) {
@@ -37,8 +32,7 @@ export class Globe extends React.Component {
   private handleOnLoad() {
     const container = document.getElementById("globe-container")
     if (container) {
-      this.globeContainer = container
-      this.initializeRenderer()
+      this.initializeRenderer(container)
       this.setupScene()
       this.setupLights()
       this.initializeEarth()
@@ -47,34 +41,29 @@ export class Globe extends React.Component {
   }
 
   private handleWindowResize() {
-    this.updateGlobeContainerDimensions()
+    const innerWidth = this.renderer.domElement.clientWidth
+    const innerHeight = this.renderer.domElement.clientHeight
 
-    this.camera.aspect = this.innerWidth / this.innerHeight
+    this.camera.aspect = innerWidth / innerHeight
     this.camera.updateProjectionMatrix()
 
-    this.renderer.setSize(this.innerWidth, this.innerHeight)
+    this.renderer.setSize(innerWidth, innerHeight)
   }
 
-  private initializeRenderer() {
-    this.updateGlobeContainerDimensions()
+  private initializeRenderer(container: HTMLElement) {
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true
     })
     this.renderer.setPixelRatio(window.devicePixelRatio)
-    this.renderer.setSize(this.innerWidth, this.innerHeight)
-    this.globeContainer.appendChild(this.renderer.domElement)
-  }
-
-  private updateGlobeContainerDimensions() {
-    const { width, height } = this.globeContainer.getBoundingClientRect()
-    this.innerWidth = width
-    this.innerHeight = height
+    this.renderer.setSize(container.clientWidth, container.clientHeight)
+    container.appendChild(this.renderer.domElement)
   }
 
   private setupScene() {
     this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera(55, this.innerWidth / this.innerHeight, 0.01, 5)
+    this.scene.background = new THREE.Color(0x00ff00)
+    this.camera = new THREE.PerspectiveCamera(55, this.renderer.domElement.clientWidth / this.renderer.domElement.clientHeight, 0.01, 5)
     this.camera.position.set(0, 0, 2)
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)

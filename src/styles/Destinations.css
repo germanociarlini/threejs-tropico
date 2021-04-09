@@ -9,6 +9,7 @@
 .destinations-container .title {
   color: white;
   font-size: 6em;
+  padding-left: 10px;
 }
 
 .destinations-content {
