@@ -10,26 +10,38 @@ export class Globe extends React.Component {
   private renderer: THREE.WebGLRenderer
   private scene: THREE.Scene
   private camera: THREE.PerspectiveCamera
+
   private controls: OrbitControls
   private earthMesh: THREE.Mesh
 
+  private raycaster: THREE.Raycaster
+  private mouseCoords: THREE.Vector2
+
+  private locationsGroup: THREE.Group
   private locations: Location[]
 
   constructor(props: any) {
     super(props)
+    this.raycaster = new THREE.Raycaster()
+    this.mouseCoords = new THREE.Vector2()
+    this.locationsGroup = new THREE.Group()
+
     this.handleOnLoad = this.handleOnLoad.bind(this)
     this.handleWindowResize = this.handleWindowResize.bind(this)
+    this.handleOnMouseMove = this.handleOnMouseMove.bind(this)
     this.animate = this.animate.bind(this)
   }
 
   public componentDidMount() {
     window.addEventListener('load', this.handleOnLoad)
     window.addEventListener('resize', this.handleWindowResize)
+    window.addEventListener('mousemove', this.handleOnMouseMove)
   }
 
   public componentWillUnmount() {
     window.removeEventListener('load', this.handleOnLoad);
     window.removeEventListener('resize', this.handleWindowResize)
+    window.removeEventListener('mousemove', this.handleOnMouseMove)
   }
 
   private handleOnLoad() {
@@ -45,13 +57,20 @@ export class Globe extends React.Component {
   }
 
   private handleWindowResize() {
-    const innerWidth = this.renderer.domElement.clientWidth
-    const innerHeight = this.renderer.domElement.clientHeight
+    const { width, height } = this.renderer.domElement.getBoundingClientRect()
 
-    this.camera.aspect = innerWidth / innerHeight
+    this.camera.aspect = width / height
     this.camera.updateProjectionMatrix()
 
-    this.renderer.setSize(innerWidth, innerHeight)
+    this.renderer.setSize(width, height)
+  }
+
+  private handleOnMouseMove(event: MouseEvent) {
+    if (this.renderer.domElement) {
+      const rect = this.renderer.domElement.getBoundingClientRect()
+      this.mouseCoords.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
+      this.mouseCoords.y = -((event.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1
+    }
   }
 
   private initializeRenderer(container: HTMLElement) {
@@ -117,6 +136,7 @@ export class Globe extends React.Component {
     this.locations.forEach((location: Location) => {
       this.initializePointOfInterest(location.coordinates.latitude, location.coordinates.longitude)
     })
+    this.scene.add(this.locationsGroup)
   }
 
   private initializePointOfInterest(latitude: number, longitude: number) {
@@ -128,7 +148,7 @@ export class Globe extends React.Component {
 
     const coordMesh = new THREE.Mesh(coordGeometry, coordMaterial)
     coordMesh.position.set(coord.x, coord.y, coord.z)
-    this.scene.add(coordMesh)
+    this.locationsGroup.add(coordMesh)
   }
 
   private animate() {
@@ -138,6 +158,14 @@ export class Globe extends React.Component {
 
   private renderFrame() {
     this.controls.update()
+    this.raycaster.setFromCamera(this.mouseCoords, this.camera)
+    const intersects = this.raycaster.intersectObjects(this.locationsGroup.children)
+    this.locationsGroup.children.forEach((coordMesh: any) => {
+      coordMesh.material.color.set('orange')
+    })
+    if (intersects[0]) {
+      (intersects[0].object as any).material.color.set(0xff00ff)
+    }
     this.renderer.render(this.scene, this.camera)
   }
 
