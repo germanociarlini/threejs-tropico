@@ -2,6 +2,7 @@ import React from "react";
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import '../styles/Globe.css';
+import { Location } from "../types";
 import { MathUtils } from "../utils/MathUtils";
 
 export class Globe extends React.Component {
@@ -11,6 +12,8 @@ export class Globe extends React.Component {
   private camera: THREE.PerspectiveCamera
   private controls: OrbitControls
   private earthMesh: THREE.Mesh
+
+  private locations: Location[]
 
   constructor(props: any) {
     super(props)
@@ -36,6 +39,7 @@ export class Globe extends React.Component {
       this.setupScene()
       this.setupLights()
       this.initializeEarth()
+      this.fetchLocations()
       this.animate()
     }
   }
@@ -104,6 +108,14 @@ export class Globe extends React.Component {
           this.scene.add(pointLight)
         })
       })
+    })
+  }
+
+  private async fetchLocations() {
+    const response = await (await fetch('locations.json')).json()
+    this.locations = response.locations
+    this.locations.forEach((location: Location) => {
+      this.initializePointOfInterest(location.coordinates.latitude, location.coordinates.longitude)
     })
   }
 
