@@ -25,10 +25,6 @@ export class Globe extends React.Component {
     this.raycaster = new THREE.Raycaster()
     this.mouseCoords = new THREE.Vector2()
     this.locationsGroup = new THREE.Group()
-
-    this.handleOnLoad = this.handleOnLoad.bind(this)
-    this.handleWindowResize = this.handleWindowResize.bind(this)
-    this.handleOnMouseMove = this.handleOnMouseMove.bind(this)
     this.animate = this.animate.bind(this)
   }
 
@@ -36,15 +32,17 @@ export class Globe extends React.Component {
     window.addEventListener('load', this.handleOnLoad)
     window.addEventListener('resize', this.handleWindowResize)
     window.addEventListener('mousemove', this.handleOnMouseMove)
+    window.addEventListener('click', this.handleOnMouseClick)
   }
 
   public componentWillUnmount() {
     window.removeEventListener('load', this.handleOnLoad);
     window.removeEventListener('resize', this.handleWindowResize)
     window.removeEventListener('mousemove', this.handleOnMouseMove)
+    window.removeEventListener('click', this.handleOnMouseClick)
   }
 
-  private handleOnLoad() {
+  private handleOnLoad = () => {
     const container = document.getElementById("globe-container")
     if (container) {
       this.initializeRenderer(container)
@@ -56,7 +54,7 @@ export class Globe extends React.Component {
     }
   }
 
-  private handleWindowResize() {
+  private handleWindowResize = () => {
     const { width, height } = this.renderer.domElement.getBoundingClientRect()
 
     this.camera.aspect = width / height
@@ -65,11 +63,22 @@ export class Globe extends React.Component {
     this.renderer.setSize(width, height)
   }
 
-  private handleOnMouseMove(event: MouseEvent) {
+  private handleOnMouseMove = (event: MouseEvent) => {
     if (this.renderer.domElement) {
       const rect = this.renderer.domElement.getBoundingClientRect()
       this.mouseCoords.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
       this.mouseCoords.y = -((event.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1
+    }
+  }
+
+  private handleOnMouseClick = () => {
+    this.raycaster.setFromCamera(this.mouseCoords, this.camera)
+    const intersects = this.raycaster.intersectObjects(this.locationsGroup.children);
+    if (intersects[0]) {
+      const selectedLocation = this.locations.find((location: Location) => location.id === intersects[0].object.userData.id)
+      if (selectedLocation) {
+        console.log(selectedLocation)
+      }
     }
   }
 
@@ -134,12 +143,13 @@ export class Globe extends React.Component {
     const response = await (await fetch('locations.json')).json()
     this.locations = response.locations
     this.locations.forEach((location: Location) => {
-      this.initializePointOfInterest(location.coordinates.latitude, location.coordinates.longitude)
+      this.initializePointOfInterest(location)
     })
     this.scene.add(this.locationsGroup)
   }
 
-  private initializePointOfInterest(latitude: number, longitude: number) {
+  private initializePointOfInterest(location: Location) {
+    const {latitude, longitude} = location.coordinates
     const coord = MathUtils.latAndLongToSphereSurface(latitude, longitude, .5)
     const coordGeometry = new THREE.SphereBufferGeometry(.005)
     const coordMaterial = new THREE.MeshBasicMaterial({
@@ -148,6 +158,7 @@ export class Globe extends React.Component {
 
     const coordMesh = new THREE.Mesh(coordGeometry, coordMaterial)
     coordMesh.position.set(coord.x, coord.y, coord.z)
+    coordMesh.userData.id = location.id
     this.locationsGroup.add(coordMesh)
   }
 
@@ -157,15 +168,15 @@ export class Globe extends React.Component {
   }
 
   private renderFrame() {
-    this.controls.update()
     this.raycaster.setFromCamera(this.mouseCoords, this.camera)
-    const intersects = this.raycaster.intersectObjects(this.locationsGroup.children)
-    this.locationsGroup.children.forEach((coordMesh: any) => {
-      coordMesh.material.color.set('orange')
+    const intersects = this.raycaster.intersectObjects(this.locationsGroup.children);
+    (this.locationsGroup.children as THREE.Mesh[]).forEach((coordMesh: THREE.Mesh) => {
+      (coordMesh.material as THREE.MeshBasicMaterial).color.set('orange')
     })
     if (intersects[0]) {
-      (intersects[0].object as any).material.color.set(0xff00ff)
+      ((intersects[0].object as THREE.Mesh).material as THREE.MeshBasicMaterial).color.set(0xff00ff);
     }
+    this.controls.update()
     this.renderer.render(this.scene, this.camera)
   }
 
