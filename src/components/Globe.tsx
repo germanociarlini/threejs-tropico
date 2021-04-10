@@ -1,11 +1,14 @@
 import React from "react";
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { LocationContext } from "../contexts/LocationContext";
 import '../styles/Globe.css';
 import { Location } from "../types";
 import { MathUtils } from "../utils/MathUtils";
 
 export class Globe extends React.Component {
+
+  public static contextType = LocationContext
 
   private renderer: THREE.WebGLRenderer
   private scene: THREE.Scene
@@ -77,7 +80,7 @@ export class Globe extends React.Component {
     if (intersects[0]) {
       const selectedLocation = this.locations.find((location: Location) => location.id === intersects[0].object.userData.id)
       if (selectedLocation) {
-        console.log(selectedLocation)
+        this.context.setSelectedLocation(selectedLocation)
       }
     }
   }
@@ -149,7 +152,7 @@ export class Globe extends React.Component {
   }
 
   private initializePointOfInterest(location: Location) {
-    const {latitude, longitude} = location.coordinates
+    const { latitude, longitude } = location.coordinates
     const coord = MathUtils.latAndLongToSphereSurface(latitude, longitude, .5)
     const coordGeometry = new THREE.SphereBufferGeometry(.005)
     const coordMaterial = new THREE.MeshBasicMaterial({

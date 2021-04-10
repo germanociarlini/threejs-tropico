@@ -11,3 +11,8 @@ export interface Location {
     longitude: number
   }
 }
+
+export interface LocationContextType {
+  selectedLocation: Location,
+  setSelectedLocation: (location: Location) => void
+}
