@@ -4,8 +4,8 @@ export interface Location {
   title: string,
   overview: string,
   climate: string,
-  "average-cost": "low" | "medium" | "high",
-  "main-attractions": string[],
+  budget: "low" | "medium" | "high",
+  mainAttractions: string[],
   coordinates: {
     latitude: number,
     longitude: number

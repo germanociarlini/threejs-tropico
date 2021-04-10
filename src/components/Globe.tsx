@@ -175,9 +175,11 @@ export class Globe extends React.Component {
     const intersects = this.raycaster.intersectObjects(this.locationsGroup.children);
     (this.locationsGroup.children as THREE.Mesh[]).forEach((coordMesh: THREE.Mesh) => {
       (coordMesh.material as THREE.MeshBasicMaterial).color.set('orange')
+      coordMesh.scale.set(1, 1, 1)
     })
     if (intersects[0]) {
       ((intersects[0].object as THREE.Mesh).material as THREE.MeshBasicMaterial).color.set(0xff00ff);
+      (intersects[0].object as THREE.Mesh).scale.set(1.2, 1.2, 1.2)
     }
     this.controls.update()
     this.renderer.render(this.scene, this.camera)

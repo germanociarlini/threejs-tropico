@@ -10,8 +10,8 @@ class LocationContextProvider extends React.Component {
     name: '',
     title: '',
     overview: '',
-    "average-cost": 'low',
-    "main-attractions": [],
+    budget: 'low',
+    mainAttractions: [],
     climate: '',
     coordinates: {
       latitude: 0,
