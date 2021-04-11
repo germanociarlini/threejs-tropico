@@ -1,14 +1,14 @@
 import React from 'react';
 import '../styles/Content.css';
-import { Intro } from './Intro';
+import { Home } from './Home';
 import { Destinations } from './Destinations';
 
 export class Content extends React.Component {
   render() {
     return (
       <main className='content'>
-        <section id='home' className='fwh-slide stick-right'>
-          <Intro />
+        <section id='home' className='fwh-slide'>
+          <Home />
         </section>
 
         <section id='destinations' className='fwh-slide'>

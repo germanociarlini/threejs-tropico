@@ -1,0 +1,53 @@
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+/* Title Card */
+.title-card {
+  display: grid;
+  text-align: center;
+  height: fit-content;
+}
+
+.title {
+  font-size: 9em;
+  font-family: "Dancing Script", cursive;
+}
+
+.subtitle {
+  font-size: 2em;
+  text-transform: uppercase;
+  font-family: "Zilla Slab Highlight", cursive;
+}
+
+.author {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: bold;
+}
+
+/* Call To Action */
+.cta {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  margin-bottom: 20px;
+  border: 1px solid beige;
+  border-radius: 5px;
+  transition: background-color 0.25s;
+  background-color: black;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 3em;
+  font-weight: lighter;
+}
+
+.cta:hover {
+  background-color: beige;
+}

@@ -6,7 +6,9 @@ export class Header extends React.Component {
     return (
       <header className='header'>
         <div className="header-container">
-          <div className="logo">Tropico</div>
+          <div className="logo">
+            <a href='#home'>Tropico</a>
+          </div>
           <nav className="header-sections">
             <ul className="header-sections-list">
               <li>

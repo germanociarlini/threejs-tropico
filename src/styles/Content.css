@@ -10,6 +10,16 @@
   -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
+a {
+  color: beige;
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+a:hover {
+  color: black
+}
+
 .content::-webkit-scrollbar {
   /* WebKit */
   width: 0;
@@ -22,8 +32,3 @@
   padding: 80px 40px 40px 40px;
 }
 
-.stick-right {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-}
