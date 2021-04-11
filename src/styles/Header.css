@@ -1,33 +1,51 @@
-.header {
+.header .header-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
   position: absolute;
   top: 0;
-  display: flex;
-  align-items: baseline;
+  left: 50%;
+  transform: translate(-50%, 0);
   background-color: black;
-  color: beige;
-  width: 100vw;
-  min-height: 40px;
+  border-radius: 0 0 10px 10px;
   z-index: 2;
 }
 
-.logo {
-  font-size: 2em;
-  font-family: "Dancing Script", cursive;
-  margin-right: 1em;
+/* Restrain header width for large screens */
+.header-container {
+  width: 960px;
+  max-width: 100%;
+  padding: 20px;
+  margin: 0 auto;
+  color: beige;
 }
 
-.header-sections {
-  display: flex;
-  min-width: 300px;
-  justify-content: space-between;
-  text-transform: lowercase;
+.header-container .logo {
+  font-size: 4em;
+  font-family: "Dancing Script", cursive;
+}
+
+.header-sections ul {
+  margin: 1em 0 0.5em;
+  text-align: center;
+}
+
+.header-sections li {
+  display: inline;
+}
+
+.header-sections a {
+  display: inline-block;
+  padding: 0.5em 1.5em;
+  text-decoration: none;
+  color: beige;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.4em;
+  transition: background-color 0.25s, color 0.25s;
 }
 
 .header-section:hover {
   background-color: beige;
   color: black;
-}
-
-.header-section {
-  color: beige;
 }
