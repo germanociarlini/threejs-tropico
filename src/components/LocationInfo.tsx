@@ -6,9 +6,9 @@ import '../styles/LocationInfo.css'
 export class LocationInfo extends React.Component {
   public static contextType = LocationContext
   render() {
-    const { name, title, overview, climate, mainAttractions, budget } = this.context.selectedLocation as Location
+    const { id, name, title, overview, climate, mainAttractions, budget } = this.context.selectedLocation as Location
     return (
-      <div className="info-container">
+      <div className={`info-container ${id !== -1 ? 'show' : ''}`}>
         <div className="info-banner">
           <span className='location-name'>{name}</span>
           <span className='location-title'>{title}</span>

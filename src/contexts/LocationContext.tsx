@@ -19,8 +19,12 @@ class LocationContextProvider extends React.Component {
     }
   }
 
-  public setSelectedLocation = (location: Location) => {
-    this.setState({...location})
+  public setSelectedLocation = (location?: Location) => {
+    if (location) {
+      this.setState({...location})
+    } else {
+      this.setState({id: -1})
+    }
   }
 
   render() {

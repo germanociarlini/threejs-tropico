@@ -1,9 +1,19 @@
 .info-container {
+  position: absolute;
+  top: 0;
+  right: -560px;
   display: flex;
   flex-direction: column;
   max-width: 500px;
   margin: 30px auto;
-  color: white;
+  background-color: rgba(0, 0, 0, 0.90);
+  color: beige;
+  transition: right 0.25s ease;
+  border-radius: 8px 0px 0px 8px;
+}
+
+.show {
+  right: 0;
 }
 
 .info-banner {

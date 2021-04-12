@@ -81,8 +81,10 @@ export class Globe extends React.Component {
       const selectedLocation = this.locations.find((location: Location) => location.id === intersects[0].object.userData.id)
       if (selectedLocation) {
         this.context.setSelectedLocation(selectedLocation)
+        return
       }
     }
+    this.context.setSelectedLocation(null)
   }
 
   private initializeRenderer(container: HTMLElement) {
@@ -97,7 +99,6 @@ export class Globe extends React.Component {
 
   private setupScene() {
     this.scene = new THREE.Scene()
-    this.scene.background = new THREE.Color(0x00ff00)
     this.camera = new THREE.PerspectiveCamera(55, this.renderer.domElement.clientWidth / this.renderer.domElement.clientHeight, 0.01, 5)
     this.camera.position.set(0, 0, 2)
 
@@ -118,9 +119,7 @@ export class Globe extends React.Component {
       map: textureLoader.load("textures/earth_atmos_2048.jpg"),
       specularMap: textureLoader.load("textures/earth_specular_2048.jpg"),
       normalMap: textureLoader.load("textures/earth_normal_2048.jpg"),
-
-      // y scale is negated to compensate for normal map handedness.
-      normalScale: new THREE.Vector2(0.85, - 0.85)
+      normalScale: new THREE.Vector2(0.85, - 0.85) // y scale is negated to compensate for normal map handedness.
     })
     this.earthMesh = new THREE.Mesh(earthGeometry, earthMaterial)
     this.scene.add(this.earthMesh)

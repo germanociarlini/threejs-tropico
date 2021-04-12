@@ -7,17 +7,13 @@
 }
 
 .destinations-container .title {
-  color: white;
+  color: beige;
   font-size: 6em;
   padding-left: 10px;
 }
 
 .destinations-content {
-  display: grid;
-  grid-template-columns: 400px auto;
+  position: relative;
+  overflow: hidden;
   height: 100%;
-}
-
-.info-container {
-  border-radius: 2px;
 }
