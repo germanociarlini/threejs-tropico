@@ -27,8 +27,15 @@ a:hover {
 }
 
 .fwh-slide {
+  max-width: 960px;
   height: 100vh;
+  margin: 0 auto;
   box-sizing: border-box;
-  padding: 80px 40px 40px 40px;
 }
 
+.section-content {
+  height: 100%;
+  padding-top: 100px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+}
