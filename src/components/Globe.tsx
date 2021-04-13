@@ -97,6 +97,13 @@ export class Globe extends React.Component {
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.setSize(container.clientWidth, container.clientHeight)
     container.appendChild(this.renderer.domElement)
+
+    const textureLoader = new THREE.TextureLoader()
+    const texture = textureLoader.load('textures/space-skybox.jpg', () => {
+      const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(texture.image.height)
+      cubeRenderTarget.fromEquirectangularTexture(this.renderer, texture)
+      this.scene.background = cubeRenderTarget.texture
+    })
   }
 
   private setupScene() {
