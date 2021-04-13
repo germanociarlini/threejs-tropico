@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Content.css';
 import { Home } from './Home';
-import { Destinations } from './Destinations';
+import { Discover } from './Discover';
 import { About } from './About';
 import { Contact } from './Contact';
 
@@ -13,8 +13,8 @@ export class Content extends React.Component {
           <div className="section-content"><Home /></div>
         </section>
 
-        <section id='destinations' className='fwh-slide'>
-          <div className="section-content"><Destinations /></div>
+        <section id='discover' className='fwh-slide'>
+          <div className="section-content"><Discover /></div>
         </section>
 
         <section id='about' className='fwh-slide'>

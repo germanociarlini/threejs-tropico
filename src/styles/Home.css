@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: flex-end;
   height: 100%;
+  color: var(--tropican-black);
 }
 
 /* Title Card */
@@ -34,20 +35,21 @@
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
   margin-bottom: 20px;
-  border: 1px solid beige;
-  border-radius: 5px;
+  border: 2px dashed beige;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: var(--tropican-sunset);
   transition: background-color 0.25s;
-  background-color: black;
-  font-family: "Source Sans Pro", sans-serif;
+}
+
+.cta-text {
+  font-family: "Staatliches", cursive;
   font-size: 3em;
-  font-weight: lighter;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .cta:hover {
-  background-color: beige;
+  background-color: var(--tropican-darkred);
 }

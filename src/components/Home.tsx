@@ -7,12 +7,12 @@ export class Home extends React.Component {
       <div className="home">
         <div className="title-card">
           <span className='title'>Tropico</span>
-          <span className='subtitle'>Discover made easy.</span>
+          <span className='subtitle'>Discovery made easy.</span>
           <span className='author'>@germanociarlini</span>
         </div>
-        <div className="cta">
-          <a href="#destinations">Discover</a>
-        </div>
+        <a className="cta" href="#discover">
+          <span className="cta-text">Discover the World</span>
+        </a>
       </div>
     )
   }

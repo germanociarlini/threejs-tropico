@@ -1,6 +1,7 @@
 import React from "react";
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { Sky } from "three/examples/jsm/objects/Sky";
 import { LocationContext } from "../contexts/LocationContext";
 import '../styles/Globe.css';
 import { Location } from "../types";
@@ -16,6 +17,7 @@ export class Globe extends React.Component {
 
   private controls: OrbitControls
   private earthMesh: THREE.Mesh
+  private sky: Sky
 
   private raycaster: THREE.Raycaster
   private mouseCoords: THREE.Vector2

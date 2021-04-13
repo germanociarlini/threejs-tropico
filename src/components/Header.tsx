@@ -15,7 +15,7 @@ export class Header extends React.Component {
                 <a className="header-section" href="#home">home</a>
               </li>
               <li>
-                <a className="header-section" href="#destinations">destinations</a>
+                <a className="header-section" href="#discover">discover</a>
               </li>
               <li>
                 <a className="header-section" href="#about">tropico</a>

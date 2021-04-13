@@ -11,13 +11,8 @@
 }
 
 a {
-  color: beige;
   text-decoration: none;
-  transition: color 0.25s;
-}
-
-a:hover {
-  color: black
+  color: var(--tropican-beige);
 }
 
 .content::-webkit-scrollbar {
