@@ -117,7 +117,7 @@ export class Globe extends React.Component {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     this.controls.minDistance = this.maxZoomAllowed
     this.controls.maxDistance = this.minZoomAllowed
-    this.controls.enableDamping = true
+    this.controls.enableDamping = false
     this.controls.update()
   }
 
