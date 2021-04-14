@@ -27,6 +27,11 @@
   font-family: "Dancing Script", cursive;
 }
 
+.header-container .logo-svg {
+  position: absolute;
+  left: 0;
+}
+
 .header-sections ul {
   margin: 1em 0 0.5em;
   text-align: center;

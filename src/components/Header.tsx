@@ -1,4 +1,5 @@
 import React from "react";
+import BranchSVG from "../assets/BranchSVG";
 import '../styles/Header.css'
 
 export class Header extends React.Component {
@@ -6,6 +7,9 @@ export class Header extends React.Component {
     return (
       <header className='header'>
         <div className="header-container">
+          <div className="logo-svg">
+            <BranchSVG width='93.6px' height='80px' color='--tropican-darkred' mirror={false} />
+          </div>
           <div className="logo">
             <a href='#home'>Tropico</a>
           </div>
