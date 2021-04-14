@@ -1,7 +1,6 @@
 import React from "react";
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { Sky } from "three/examples/jsm/objects/Sky";
 import { LocationContext } from "../contexts/LocationContext";
 import '../styles/Globe.css';
 import { Location } from "../types";
@@ -15,9 +14,13 @@ export class Globe extends React.Component {
   private scene: THREE.Scene
   private camera: THREE.PerspectiveCamera
 
+  private minZoomAllowed = 3
+  private maxZoomAllowed = .6
+  private minZoomScale = 4
+  private maxZoomScale = .6
+
   private controls: OrbitControls
   private earthMesh: THREE.Mesh
-  private sky: Sky
 
   private raycaster: THREE.Raycaster
   private mouseCoords: THREE.Vector2
@@ -112,8 +115,8 @@ export class Globe extends React.Component {
     this.camera.position.set(0, 0, 2)
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.controls.minDistance = .6
-    this.controls.maxDistance = 5
+    this.controls.minDistance = this.maxZoomAllowed
+    this.controls.maxDistance = this.minZoomAllowed
     this.controls.enableDamping = true
     this.controls.update()
   }
@@ -154,12 +157,12 @@ export class Globe extends React.Component {
     const response = await (await fetch('locations.json')).json()
     this.locations = response.locations
     this.locations.forEach((location: Location) => {
-      this.initializePointOfInterest(location)
+      this.initializeLocation(location)
     })
     this.scene.add(this.locationsGroup)
   }
 
-  private initializePointOfInterest(location: Location) {
+  private initializeLocation(location: Location) {
     const { latitude, longitude } = location.coordinates
     const coord = MathUtils.latAndLongToSphereSurface(latitude, longitude, .5)
     const coordGeometry = new THREE.SphereBufferGeometry(.005)
@@ -181,13 +184,15 @@ export class Globe extends React.Component {
   private renderFrame() {
     this.raycaster.setFromCamera(this.mouseCoords, this.camera)
     const intersects = this.raycaster.intersectObjects(this.locationsGroup.children);
+    const cameraZoom = this.camera.position.distanceTo(this.earthMesh.position)
+    const linearScale = this.minZoomScale + (this.maxZoomScale - this.minZoomScale) * (cameraZoom - this.minZoomAllowed) / (this.maxZoomAllowed - this.minZoomAllowed);
     (this.locationsGroup.children as THREE.Mesh[]).forEach((coordMesh: THREE.Mesh) => {
       (coordMesh.material as THREE.MeshBasicMaterial).color.set('orange')
-      coordMesh.scale.set(1, 1, 1)
+      coordMesh.scale.set(linearScale, linearScale, linearScale)
     })
     if (intersects[0]) {
       ((intersects[0].object as THREE.Mesh).material as THREE.MeshBasicMaterial).color.set(0xff00ff);
-      (intersects[0].object as THREE.Mesh).scale.set(1.2, 1.2, 1.2)
+      (intersects[0].object as THREE.Mesh).scale.multiplyScalar(1.2)
     }
     this.controls.update()
     this.renderer.render(this.scene, this.camera)
