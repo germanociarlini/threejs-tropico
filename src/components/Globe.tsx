@@ -154,6 +154,7 @@ export class Globe extends React.Component {
   }
 
   private async fetchLocations() {
+    this.context.fetchLocations()
     const response = await (await fetch('locations.json')).json()
     this.locations = response.locations
     this.locations.forEach((location: Location) => {
