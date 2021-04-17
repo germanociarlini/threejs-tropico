@@ -1,16 +1,16 @@
 import React, { createContext } from "react";
 import { Location, LocationContextType } from '../types';
 
-export const LocationContext = createContext({} as LocationContextType)
+export const LocationContext = createContext<LocationContextType | undefined>(undefined)
 
 class LocationContextProvider extends React.Component {
 
-  public blankLocation: Location = {
+  public state: Location = {
     id: 'slug:blank',
     name: '',
     fullName: '',
     summary: '',
-    bannerImageURL: '/',
+    bannerImageURL: '',
     weatherType: '',
     costs: {
       bread: 0,
@@ -31,13 +31,11 @@ class LocationContextProvider extends React.Component {
       leisureAndCulture: 0,
       tolerance: 0,
     },
-    mainAttractions: [],
     coordinates: {
       latitude: 0,
       longitude: 0
     }
   }
-  public state = { ...this.blankLocation }
 
   public setSelectedLocation = (location: Location | null) => {
     if (location) {
@@ -63,18 +61,58 @@ class LocationContextProvider extends React.Component {
 
     const searchResults = await Promise.all(citySearchPromises)
     const validSearchResults = searchResults.filter((searchResult: any) => searchResult._embedded["city:search-results"][0] !== undefined)
-    const validCities = validSearchResults.map(searchResult => searchResult._embedded["city:search-results"][0])
+    const validCities = validSearchResults.map((searchResult: any) => searchResult._embedded["city:search-results"][0])
 
-    const fetchLocationData = async (city: any): Promise<any> => {
+    const fetchLocationData = async (city: any): Promise<Location> => {
       const cityId = city._links["city:item"]
       const cityInfo = await (await fetch(cityId.href)).json()
       const urbanArea = await (await fetch(cityInfo._links["city:urban_area"].href)).json()
-      const cityImagesResponse = await (await fetch(urbanArea._links["ua:images"].href)).json()
-      const cityImages = cityImagesResponse.photos[0].image.web
-      const location = {
+      const urbanAreaDetailsResult = await (await fetch(urbanArea._links["ua:details"].href)).json()
+      const urbanAreaScoresResult = await (await fetch(urbanArea._links["ua:scores"].href)).json()
+      const urbanAreaImages = await (await fetch(urbanArea._links["ua:images"].href)).json()
 
+      const urbanAreaScores = urbanAreaScoresResult.categories.reduce((scores: any, { name, score_out_of_10 }: any) => {
+        return (scores[name] = score_out_of_10, scores)
+      }, {})
+
+      const urbanAreaCosts = urbanAreaDetailsResult.categories.find((category: any) => category.id === 'COST-OF-LIVING').data.reduce((costs: any, { id, currency_dollar_value }: any) => {
+        return (costs[id] = currency_dollar_value, costs)
+      }, {})
+
+      const urbanAreaClimate = urbanAreaDetailsResult.categories.find((category: any) => category.id === 'CLIMATE')
+
+      const location: Location = {
+        id: urbanArea.ua_id,
+        name: cityInfo.name,
+        fullName: cityInfo.full_name,
+        summary: urbanAreaScoresResult.summary,
+        bannerImageURL: urbanAreaImages.photos[0].image.web,
+        weatherType: urbanAreaClimate.data.find((weatherData: any) => weatherData.id === 'WEATHER-TYPE').string_value,
+        costs: {
+          bread: urbanAreaCosts['COST-BREAD'],
+          cappuccino: urbanAreaCosts['COST-CAPUCCINO'],
+          cinema: urbanAreaCosts['COST-CINEMA'],
+          beer: urbanAreaCosts['COST-IMPORT-BEER'],
+          monthlyPublicTransport: urbanAreaCosts['COST-PUBLIC-TRANSPORT'],
+          restaurantPrice: urbanAreaCosts['COST-RESTAURANT-MEAL'],
+          taxi: urbanAreaCosts['COST-TAXI'],
+        },
+        scores: {
+          travelConnectivity: urbanAreaScores['Travel Connectivity'],
+          commute: urbanAreaScores['Commute'],
+          safety: urbanAreaScores['Safety'],
+          healthcare: urbanAreaScores['Healthcare'],
+          environmentalQuality: urbanAreaScores['Environmental Quality'],
+          internetAccess: urbanAreaScores['Internet Access'],
+          leisureAndCulture: urbanAreaScores['Leisure & Culture'],
+          tolerance: urbanAreaScores['Tolerance'],
+        },
+        coordinates: {
+          latitude: cityInfo.location.latlon.latitude,
+          longitude: cityInfo.location.latlon.longitude
+        }
       }
-      return this.blankLocation
+      return location
     }
 
     validCities.forEach((locationName: string) => {
