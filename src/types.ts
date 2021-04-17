@@ -31,9 +31,9 @@ export interface Location {
 }
 
 export interface LocationContextType {
-  selectedLocation: Location | null,
+  state: {selectedLocation: Location | null, locations: Location[]}
   setSelectedLocation: (location: Location | null) => void,
-  fetchLocations: () => Promise<Location[]>
+  fetchLocations: () => Promise<void>
 }
 
 export interface UrbanAreaScore {

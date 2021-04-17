@@ -3,50 +3,20 @@ import { Location, LocationContextType } from '../types';
 
 export const LocationContext = createContext<LocationContextType | undefined>(undefined)
 
-class LocationContextProvider extends React.Component {
+class LocationContextProvider extends React.Component<{}, { selectedLocation: Location | null, locations: Location[] }> {
 
-  public state: Location = {
-    id: 'slug:blank',
-    name: '',
-    fullName: '',
-    summary: '',
-    bannerImageURL: '',
-    weatherType: '',
-    costs: {
-      bread: 0,
-      cappuccino: 0,
-      cinema: 0,
-      beer: 0,
-      monthlyPublicTransport: 0,
-      restaurantPrice: 0,
-      taxi: 0,
-    },
-    scores: {
-      travelConnectivity: 0,
-      commute: 0,
-      safety: 0,
-      healthcare: 0,
-      environmentalQuality: 0,
-      internetAccess: 0,
-      leisureAndCulture: 0,
-      tolerance: 0,
-    },
-    coordinates: {
-      latitude: 0,
-      longitude: 0
-    }
+  public componentDidMount() {
+    this.setState({
+      selectedLocation: null,
+      locations: []
+    })
   }
 
   public setSelectedLocation = (location: Location | null) => {
-    if (location) {
-      this.setState({ ...location })
-    } else {
-      this.setState({ id: -1 })
-    }
+    this.setState({ ...this.state, selectedLocation: location })
   }
 
-  public async fetchLocations() {
-
+  public fetchLocations = async () => {
     const rootApiUrl = 'https://api.teleport.org/api'
     const locationsNameList = ['Rio de Janeiro', 'London', 'San Francisco', 'New York', 'Hong Kong', 'Tokyo', 'Sydney', 'Buenos Aires', 'Berlin', 'Miami']
     const citySearchPromises: Promise<any>[] = []
@@ -120,14 +90,13 @@ class LocationContextProvider extends React.Component {
     })
 
     const locations = await Promise.all(cityInfoPromises)
-    console.log(locations)
-    return []
+    this.setState({...this.state, locations: locations})
   }
 
   render() {
     return (
       <LocationContext.Provider value={{
-        selectedLocation: { ...this.state },
+        state: {...this.state},
         setSelectedLocation: this.setSelectedLocation,
         fetchLocations: this.fetchLocations
       }}>

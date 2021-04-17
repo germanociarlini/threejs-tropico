@@ -26,7 +26,7 @@ export class Globe extends React.Component {
   private mouseCoords: THREE.Vector2
 
   private locationsGroup: THREE.Group
-  private locations: Location[]
+  //private locations: Location[]
 
   constructor(props: any) {
     super(props)
@@ -83,8 +83,8 @@ export class Globe extends React.Component {
     this.raycaster.setFromCamera(this.mouseCoords, this.camera)
     const intersects = this.raycaster.intersectObjects(this.locationsGroup.children);
     if (intersects[0]) {
-      const selectedLocation = this.locations.find((location: Location) => location.id === intersects[0].object.userData.id)
-      if (selectedLocation) {
+      const selectedLocation = this.context.state.locations.find((location: Location) => location.id === intersects[0].object.userData.id)
+      if (selectedLocation !== undefined) {
         this.context.setSelectedLocation(selectedLocation)
         return
       }
@@ -154,16 +154,15 @@ export class Globe extends React.Component {
   }
 
   private async fetchLocations() {
-    this.context.fetchLocations()
-    const response = await (await fetch('locations.json')).json()
-    this.locations = response.locations
-    this.locations.forEach((location: Location) => {
-      this.initializeLocation(location)
+    await this.context.fetchLocations()
+    this.context.state.locations.forEach((location: Location) => {
+      const locationMesh = this.initializeLocation(location)
+      this.locationsGroup.add(locationMesh)
     })
     this.scene.add(this.locationsGroup)
   }
 
-  private initializeLocation(location: Location) {
+  private initializeLocation(location: Location): THREE.Mesh {
     const { latitude, longitude } = location.coordinates
     const coord = MathUtils.latAndLongToSphereSurface(latitude, longitude, .5)
     const coordGeometry = new THREE.SphereBufferGeometry(.005)
@@ -174,7 +173,7 @@ export class Globe extends React.Component {
     const coordMesh = new THREE.Mesh(coordGeometry, coordMaterial)
     coordMesh.position.set(coord.x, coord.y, coord.z)
     coordMesh.userData.id = location.id
-    this.locationsGroup.add(coordMesh)
+    return coordMesh
   }
 
   private animate() {
