@@ -6,10 +6,10 @@ import '../styles/LocationInfo.css'
 export class LocationInfo extends React.Component {
   public static contextType = LocationContext
   render() {
-    const { id, name, fullName, summary, weatherType, costs, scores } = (this.context.state.selectedLocation as Location) || {}
+    const { id, name, fullName, bannerImageURL, summary, weatherType, costs, scores } = (this.context.state.selectedLocation as Location) || {}
     return (
       <div className={`info-container ${id ? 'show' : ''}`}>
-        <div className="info-banner">
+        <div className="info-banner" style={{backgroundImage: `url('${bannerImageURL}')`}}>
           <span className='location-name'>{name}</span>
           <span className='location-title'>{fullName}</span>
         </div>

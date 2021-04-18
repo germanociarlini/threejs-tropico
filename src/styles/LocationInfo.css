@@ -5,11 +5,12 @@
   display: flex;
   flex-direction: column;
   max-width: 500px;
-  margin: 30px auto;
+  height: 100%;
   color: var(--tropican-beige);
   background-color: var(--tropican-black);
-  opacity: 95%;
+  opacity: 90%;
   transition: right 0.25s ease;
+  border-left: 1px var(--tropican-sunset) inset;
   border-radius: 8px 0px 0px 8px;
 }
 
@@ -22,7 +23,10 @@
   flex-direction: column;
   align-items: flex-end;
   padding: 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
   font-family: "Dancing Script", cursive;
+  text-shadow: 0 0 10px black, 1px 1px 1px black;
 }
 
 .location-name {
