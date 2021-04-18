@@ -11,7 +11,9 @@ export class Discover extends React.Component {
       <div className="destinations-container">
         <span className='title'>Discover</span>
         <div className="destinations-content">
-          <LocationContextProvider>
+          <LocationContextProvider
+            rootApiUrl='https://api.teleport.org/api'
+            locationsNameList={['Rio de Janeiro', 'London', 'San Francisco', 'New York', 'Hong Kong', 'Tokyo', 'Sydney', 'Buenos Aires', 'Berlin', 'Miami']}>
             <Globe />
             <LocationInfo />
           </LocationContextProvider>
