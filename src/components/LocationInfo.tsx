@@ -14,8 +14,7 @@ export class LocationInfo extends React.Component {
           <span className='location-title'>{fullName}</span>
         </div>
         <div className="info-content">
-          <span>{summary}</span>
-          <br/>
+          <span dangerouslySetInnerHTML={{__html: summary}}></span>
           <span>Climate: {weatherType}</span>
           <span>Taxi cost: {costs?.taxi}</span>
           <span>A sample of what {name} has to offer:</span>

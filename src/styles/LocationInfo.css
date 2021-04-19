@@ -11,7 +11,6 @@
   opacity: 90%;
   transition: right 0.25s ease;
   border-left: 1px var(--tropican-sunset) inset;
-  border-radius: 8px 0px 0px 8px;
 }
 
 .show {

@@ -104,6 +104,8 @@ class LocationContextProvider extends React.Component<LocationContextProps, Loca
     urbanAreasData.forEach((urbanAreaData: UrbanAreaData) => {
       const { cityInfo, urbanArea, urbanAreaDetails, urbanAreaScores, urbanAreaImages } = urbanAreaData
 
+      const [cityName, regionName, countryName] = cityInfo.full_name.split(/,/)
+
       const simplifiedScores = urbanAreaScores.categories.reduce<{[name: string]: number}>((scores, category) => {
         scores[category.name] = category.score_out_of_10;
         return scores
@@ -118,10 +120,12 @@ class LocationContextProvider extends React.Component<LocationContextProps, Loca
       const climate = urbanAreaDetails.categories.find((category: Category) => category.id === 'CLIMATE')
       const weatherType = climate?.data.find((weatherData: Datum) => weatherData.id === 'WEATHER-TYPE')?.string_value
 
+      //summary: urbanAreaScores.summary.replace(/\n|\t|<.>|<..>/g, '').split(/ {4}/)[1],
+
       const location: Location = {
         id: urbanArea.ua_id,
-        name: cityInfo.name,
-        fullName: cityInfo.full_name,
+        name: cityName,
+        fullName: `${regionName}, ${countryName}`,
         summary: urbanAreaScores.summary,
         bannerImageURL: urbanAreaImages.photos[0].image.web,
         weatherType: weatherType || '',
