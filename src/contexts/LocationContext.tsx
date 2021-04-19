@@ -67,7 +67,7 @@ class LocationContextProvider extends React.Component<LocationContextProps, Loca
     })
 
     const searchResults = await Promise.all(citySearchPromises)
-    const cityRefs = searchResults.map((x: CitySearchResult) => x._embedded["city:search-results"][0])
+    const cityRefs = searchResults.map((searchResult: CitySearchResult) => searchResult._embedded["city:search-results"][0])
     return cityRefs
   }
 

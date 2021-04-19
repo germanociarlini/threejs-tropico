@@ -13,7 +13,7 @@ export class Discover extends React.Component {
         <div className="destinations-content">
           <LocationContextProvider
             rootApiUrl='https://api.teleport.org/api'
-            locationsNameList={['Rio de Janeiro', 'London', 'San Francisco', 'New York', 'Hong Kong', 'Tokyo', 'Sydney', 'Buenos Aires', 'Berlin', 'Miami']}>
+            locationsNameList={['Paris', 'Rome', 'Lisbon', 'Manila', 'Rio de Janeiro', 'London', 'San Francisco', 'New York', 'Hong Kong', 'Tokyo', 'Sydney', 'Buenos Aires', 'Berlin', 'Miami', 'Cape Town', 'Cairo', 'Vancouver', 'Mexico City', 'Dubai', 'La Paz', 'Moscow', 'Seoul']}>
             <Globe />
             <LocationInfo />
           </LocationContextProvider>
