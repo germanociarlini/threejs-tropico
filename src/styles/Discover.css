@@ -8,7 +8,7 @@
 
 .destinations-container .title {
   color: beige;
-  font-size: 6em;
+  font-size: min(6em, 15vw);
   padding-left: 10px;
 }
 

@@ -57,12 +57,13 @@ export class Globe extends React.Component {
       this.setupLights()
       this.initializeEarth()
       this.fetchLocations()
+      this.handleWindowResize()
       this.animate()
     }
   }
 
   private handleWindowResize = () => {
-    const { width, height } = this.renderer.domElement.getBoundingClientRect()
+    const { width, height } = this.renderer.domElement.parentElement!.getBoundingClientRect()
 
     this.camera.aspect = width / height
     this.camera.updateProjectionMatrix()
