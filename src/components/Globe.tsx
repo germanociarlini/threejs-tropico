@@ -26,7 +26,6 @@ export class Globe extends React.Component {
   private mouseCoords: THREE.Vector2
 
   private locationsGroup: THREE.Group
-  //private locations: Location[]
 
   constructor(props: any) {
     super(props)

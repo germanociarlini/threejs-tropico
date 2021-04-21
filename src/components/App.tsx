@@ -9,8 +9,10 @@ function App() {
   return (
     <div className='container'>
       <Scene />
-      <Header />
-      <Content />
+      <div className="view-container">
+        <Header />
+        <Content />
+      </div>
     </div>
   );
 }

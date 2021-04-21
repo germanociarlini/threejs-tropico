@@ -1,7 +1,7 @@
 import React from "react";
 import { LocationContext } from "../contexts/LocationContext";
-import { Location } from '../types'
-import '../styles/LocationInfo.css'
+import '../styles/LocationInfo.css';
+import { Location } from '../types';
 
 export class LocationInfo extends React.Component {
   public static contextType = LocationContext
