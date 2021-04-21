@@ -10,7 +10,7 @@
 .title-card {
   display: grid;
   text-align: center;
-  height: fit-content;
+  margin-right: 1rem;
 }
 
 .title {
@@ -45,7 +45,7 @@
 
 .cta-text {
   font-family: "Staatliches", cursive;
-  font-size: 3em;
+  font-size: min(5vw, 3rem);
   font-weight: bold;
   text-transform: uppercase;
 }

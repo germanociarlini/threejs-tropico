@@ -45,3 +45,19 @@
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1.4em;
 }
+
+.location-subtitle {
+  display: flex;
+  justify-content: space-evenly;
+  font-family: "Staatliches", cursive;
+  font-size: 1.2rem;
+}
+
+.location-summary {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.location-overview {
+  padding: 1rem 0;
+}

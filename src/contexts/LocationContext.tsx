@@ -139,6 +139,7 @@ class LocationContextProvider extends React.Component<LocationContextProps, Loca
           taxi: (simplifiedCosts) ? simplifiedCosts['COST-TAXI'] : 0,
         },
         scores: {
+          cityScore: urbanAreaScores.teleport_city_score,
           travelConnectivity: (simplifiedScores) ? simplifiedScores['Travel Connectivity'] : 0,
           commute: (simplifiedScores) ? simplifiedScores['Commute'] : 0,
           safety: (simplifiedScores) ? simplifiedScores['Safety'] : 0,

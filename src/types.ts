@@ -15,6 +15,7 @@ export interface Location {
     taxi: number,
   },
   scores: {
+    cityScore: number,
     travelConnectivity: number,
     commute: number,
     safety: number,
