@@ -1,5 +1,6 @@
 import React from "react";
 import * as THREE from 'three';
+import * as TWEEN from '@tweenjs/tween.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { LocationContext } from "../contexts/LocationContext";
 import '../styles/Globe.css';
@@ -13,6 +14,7 @@ export class Globe extends React.Component {
   private renderer: THREE.WebGLRenderer
   private scene: THREE.Scene
   private camera: THREE.PerspectiveCamera
+  private tween: TWEEN.Tween<{ x: number, y: number, z: number }>
 
   private minZoomAllowed = 3
   private maxZoomAllowed = .6
@@ -72,7 +74,7 @@ export class Globe extends React.Component {
   }
 
   private handleOnMouseMove = (event: MouseEvent) => {
-    if (this.renderer.domElement) {
+    if (this.renderer && this.renderer.domElement) {
       const rect = this.renderer.domElement.getBoundingClientRect()
       this.mouseCoords.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
       this.mouseCoords.y = -((event.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1
@@ -83,13 +85,32 @@ export class Globe extends React.Component {
     this.raycaster.setFromCamera(this.mouseCoords, this.camera)
     const intersects = this.raycaster.intersectObjects(this.locationsGroup.children);
     if (intersects[0]) {
-      const selectedLocation = this.context.state.locations.find((location: Location) => location.id === intersects[0].object.userData.id)
+      const locationObject = intersects[0].object
+      const selectedLocation = this.context.state.locations.find((location: Location) => location.id === locationObject.userData.id)
       if (selectedLocation !== undefined) {
         this.context.setSelectedLocation(selectedLocation)
+        this.focusOnLocation(locationObject)
         return
       }
     }
     this.context.setSelectedLocation(null)
+  }
+
+  private focusOnLocation(locationObject: THREE.Object3D) {
+    this.controls.enabled = false
+    const { x: cameraX, y: cameraY, z: cameraZ } = this.camera.position
+    const { x: locationX, y: locationY, z: locationZ } = locationObject.position
+    const currentPosition = { x: cameraX, y: cameraY, z: cameraZ }
+    const endPosition = { x: locationX * 1.8, y: locationY * 1.8, z: locationZ * 1.8 }
+    this.tween = new TWEEN.Tween(currentPosition).to(endPosition, 800).onUpdate(() => {
+      this.camera.position.x = currentPosition.x
+      this.camera.position.y = currentPosition.y
+      this.camera.position.z = currentPosition.z
+    }).onComplete(() => {
+      this.controls.enabled = true
+    })
+    this.tween.easing(TWEEN.Easing.Cubic.InOut)
+    this.tween.start()
   }
 
   private initializeRenderer(container: HTMLElement) {
@@ -118,6 +139,7 @@ export class Globe extends React.Component {
     this.controls.minDistance = this.maxZoomAllowed
     this.controls.maxDistance = this.minZoomAllowed
     this.controls.enableDamping = false
+    this.controls.enablePan = false
     this.controls.update()
   }
 
@@ -195,6 +217,7 @@ export class Globe extends React.Component {
       (intersects[0].object as THREE.Mesh).scale.multiplyScalar(1.2)
     }
     this.controls.update()
+    this.tween?.update()
     this.renderer.render(this.scene, this.camera)
   }
 
