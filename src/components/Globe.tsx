@@ -65,12 +65,14 @@ export class Globe extends React.Component {
   }
 
   private handleWindowResize = () => {
-    const { width, height } = this.renderer.domElement.parentElement!.getBoundingClientRect()
+    const { width, height } = (this.renderer.domElement.parentElement?.getBoundingClientRect() || {})
 
-    this.camera.aspect = width / height
-    this.camera.updateProjectionMatrix()
+    if (width && height) {
+      this.camera.aspect = width / height
+      this.camera.updateProjectionMatrix()
 
-    this.renderer.setSize(width, height)
+      this.renderer.setSize(width, height)
+    }
   }
 
   private handleOnMouseMove = (event: MouseEvent) => {
@@ -98,10 +100,12 @@ export class Globe extends React.Component {
 
   private focusOnLocation(locationObject: THREE.Object3D) {
     this.controls.enabled = false
+
     const { x: cameraX, y: cameraY, z: cameraZ } = this.camera.position
     const { x: locationX, y: locationY, z: locationZ } = locationObject.position
     const currentPosition = { x: cameraX, y: cameraY, z: cameraZ }
     const endPosition = { x: locationX * 1.8, y: locationY * 1.8, z: locationZ * 1.8 }
+
     this.tween = new TWEEN.Tween(currentPosition).to(endPosition, 800).onUpdate(() => {
       this.camera.position.x = currentPosition.x
       this.camera.position.y = currentPosition.y

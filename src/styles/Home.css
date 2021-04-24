@@ -11,16 +11,15 @@
 .title-card {
   display: grid;
   text-align: center;
-  margin-right: 1rem;
 }
 
 .title {
-  font-size: 9em;
+  font-size: min(9em, 30vw);
   font-family: "Dancing Script", cursive;
 }
 
 .subtitle {
-  font-size: 2em;
+  font-size: min(2em, 5vw);
   text-transform: uppercase;
   font-family: "Zilla Slab Highlight", cursive;
 }
