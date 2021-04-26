@@ -1,6 +1,6 @@
+import * as TWEEN from '@tweenjs/tween.js';
 import React from "react";
 import * as THREE from 'three';
-import * as TWEEN from '@tweenjs/tween.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { LocationContext } from "../contexts/LocationContext";
 import '../styles/Globe.css';
@@ -24,6 +24,8 @@ export class Globe extends React.Component {
   private controls: OrbitControls
   private earthMesh: THREE.Mesh
 
+  private container: HTMLDivElement
+
   private raycaster: THREE.Raycaster
   private mouseCoords: THREE.Vector2
 
@@ -39,39 +41,38 @@ export class Globe extends React.Component {
 
   public componentDidMount() {
     window.addEventListener('load', this.handleOnLoad)
-    window.addEventListener('resize', this.handleWindowResize)
     window.addEventListener('mousemove', this.handleOnMouseMove)
     window.addEventListener('click', this.handleOnMouseClick)
   }
 
   public componentWillUnmount() {
     window.removeEventListener('load', this.handleOnLoad);
-    window.removeEventListener('resize', this.handleWindowResize)
     window.removeEventListener('mousemove', this.handleOnMouseMove)
     window.removeEventListener('click', this.handleOnMouseClick)
   }
 
   private handleOnLoad = () => {
-    const container = document.getElementById("globe-container")
-    if (container) {
-      this.initializeRenderer(container)
+    this.container = document.getElementById("globe-container") as HTMLDivElement
+    if (this.container) {
+      new ResizeObserver(this.handleContainerResize).observe(this.container)
+      this.initializeRenderer()
       this.setupScene()
       this.setupLights()
       this.initializeEarth()
       this.fetchLocations()
-      this.handleWindowResize()
       this.animate()
     }
   }
 
-  private handleWindowResize = () => {
-    const { width, height } = (this.renderer.domElement.parentElement?.getBoundingClientRect() || {})
+  private handleContainerResize = () => {
+    const { width, height } = (this.container.getBoundingClientRect() || {})
 
     if (width && height) {
       this.camera.aspect = width / height
       this.camera.updateProjectionMatrix()
 
       this.renderer.setSize(width, height)
+      console.log('resizing')
     }
   }
 
@@ -98,33 +99,14 @@ export class Globe extends React.Component {
     this.context.setSelectedLocation(null)
   }
 
-  private focusOnLocation(locationObject: THREE.Object3D) {
-    this.controls.enabled = false
-
-    const { x: cameraX, y: cameraY, z: cameraZ } = this.camera.position
-    const { x: locationX, y: locationY, z: locationZ } = locationObject.position
-    const currentPosition = { x: cameraX, y: cameraY, z: cameraZ }
-    const endPosition = { x: locationX * 1.8, y: locationY * 1.8, z: locationZ * 1.8 }
-
-    this.tween = new TWEEN.Tween(currentPosition).to(endPosition, 800).onUpdate(() => {
-      this.camera.position.x = currentPosition.x
-      this.camera.position.y = currentPosition.y
-      this.camera.position.z = currentPosition.z
-    }).onComplete(() => {
-      this.controls.enabled = true
-    })
-    this.tween.easing(TWEEN.Easing.Cubic.InOut)
-    this.tween.start()
-  }
-
-  private initializeRenderer(container: HTMLElement) {
+  private initializeRenderer() {
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true
     })
     this.renderer.setPixelRatio(window.devicePixelRatio)
-    this.renderer.setSize(container.clientWidth, container.clientHeight)
-    container.appendChild(this.renderer.domElement)
+    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight)
+    this.container.appendChild(this.renderer.domElement)
 
     const textureLoader = new THREE.TextureLoader()
     const texture = textureLoader.load('textures/space-skybox.jpg', () => {
@@ -147,10 +129,12 @@ export class Globe extends React.Component {
     this.controls.update()
   }
 
+  /**
+   * ref: https://github.com/mrdoob/three.js/blob/master/examples/misc_controls_fly.html
+   */
   private initializeEarth() {
     const textureLoader = new THREE.TextureLoader()
     const earthGeometry = new THREE.SphereBufferGeometry(0.5, 64, 64)
-    // ref: https://github.com/mrdoob/three.js/blob/master/examples/misc_controls_fly.html
     const earthMaterial = new THREE.MeshPhongMaterial({
       specular: 0x333333,
       shininess: 15,
@@ -200,6 +184,25 @@ export class Globe extends React.Component {
     coordMesh.position.set(coord.x, coord.y, coord.z)
     coordMesh.userData.id = location.id
     return coordMesh
+  }
+
+  private focusOnLocation(locationObject: THREE.Object3D) {
+    this.controls.enabled = false
+
+    const { x: cameraX, y: cameraY, z: cameraZ } = this.camera.position
+    const { x: locationX, y: locationY, z: locationZ } = locationObject.position
+    const currentPosition = { x: cameraX, y: cameraY, z: cameraZ }
+    const endPosition = { x: locationX * 1.8, y: locationY * 1.8, z: locationZ * 1.8 }
+
+    this.tween = new TWEEN.Tween(currentPosition).to(endPosition, 800).onUpdate(() => {
+      this.camera.position.x = currentPosition.x
+      this.camera.position.y = currentPosition.y
+      this.camera.position.z = currentPosition.z
+    }).onComplete(() => {
+      this.controls.enabled = true
+    })
+    this.tween.easing(TWEEN.Easing.Cubic.InOut)
+    this.tween.start()
   }
 
   private animate() {

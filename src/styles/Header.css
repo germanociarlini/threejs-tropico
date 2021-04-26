@@ -45,7 +45,7 @@
   font-family: "Staatliches", cursive;
   font-size: 1.4em;
   border-radius: 10px;
-  transition: box-shadow 0.2s, font-weight 0.2s;
+  transition: box-shadow 0.2s ease-out;
 }
 
 .header-section:hover {

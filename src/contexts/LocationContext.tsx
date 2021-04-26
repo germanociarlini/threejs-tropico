@@ -124,8 +124,8 @@ class LocationContextProvider extends React.Component<LocationContextProps, Loca
 
       const location: Location = {
         id: urbanArea.ua_id,
-        name: cityName,
-        fullName: `${regionName}, ${countryName}`,
+        cityName: cityName,
+        regionName: `${regionName}, ${countryName}`,
         summary: urbanAreaScores.summary,
         bannerImageURL: urbanAreaImages.photos[0].image.web,
         weatherType: weatherType || '',

@@ -13,7 +13,13 @@
 }
 
 .destinations-content {
-  position: relative;
+  display: grid;
+  grid-template-columns: 100% 0%;
+  transition: grid-template-columns 0.25s;
   overflow: hidden;
   height: 100%;
+}
+
+.show {
+  grid-template-columns: 50% 50%;
 }

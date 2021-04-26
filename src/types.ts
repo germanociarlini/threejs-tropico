@@ -1,7 +1,7 @@
 export interface Location {
   id: string,
-  name: string,
-  fullName: string,
+  cityName: string,
+  regionName: string,
   summary: string,
   bannerImageURL: string,
   weatherType: string,

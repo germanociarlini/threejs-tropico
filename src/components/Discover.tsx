@@ -1,22 +1,20 @@
 import React from "react";
-import LocationContextProvider from "../contexts/LocationContext";
+import { LocationContext } from "../contexts/LocationContext";
 import '../styles/Discover.css';
+import { Location } from "../types";
 import { Globe } from "./Globe";
 import { LocationInfo } from "./LocationInfo";
 
 export class Discover extends React.Component {
-
+  public static contextType = LocationContext
   render() {
+    const { id } = (this.context.state.selectedLocation as Location) || {}
     return (
       <div className="destinations-container">
         <span className='title'>Discover</span>
-        <div className="destinations-content">
-          <LocationContextProvider
-            rootApiUrl='https://api.teleport.org/api'
-            locationsNameList={['Paris', 'Rome', 'Lisbon', 'Manila', 'Rio de Janeiro', 'London', 'San Francisco', 'New York', 'Hong Kong', 'Tokyo', 'Sydney', 'Buenos Aires', 'Berlin', 'Miami', 'Cape Town', 'Cairo', 'Vancouver', 'Mexico City', 'Dubai', 'La Paz', 'Moscow', 'Seoul']}>
-            <Globe />
-            <LocationInfo />
-          </LocationContextProvider>
+        <div className={`destinations-content ${id ? 'show' : ''}`}>
+          <Globe />
+          <LocationInfo />
         </div>
       </div>
     )
