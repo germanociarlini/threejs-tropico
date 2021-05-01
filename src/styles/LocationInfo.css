@@ -1,4 +1,65 @@
+.grid-container {
+  display: grid;
+  grid-template-rows: 1.2fr 0.6fr 4fr;
+  grid-template-columns: 5fr 1fr;
+  grid-template-areas:
+    "banner banner"
+    "general-info general-score"
+    "info-container info-container";
+
+  color: var(--tropican-beige);
+  opacity: 90%;
+}
+
+/* Banner */
+.banner {
+  grid-area: banner;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.text-scrim {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.5);
+  font-family: "Dancing Script", cursive;
+  text-shadow: 0 0 10px black, 1px 1px 1px black;
+}
+
+.banner-title {
+  font-size: 4em;
+}
+
+.banner-subtitle {
+  font-size: 2em;
+}
+
+/* General Info */
+.general-info {
+  grid-area: general-info;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-family: "Staatliches", cursive;
+}
+
+.general-score {
+  grid-area: general-score;
+  background-color: teal;
+}
+
+/* Summary and Dashboard */
 .info-container {
+  grid-area: info-container;
+}
+
+/*.info-container {
   display: flex;
   flex-direction: column;
   max-width: 500px;
@@ -53,4 +114,4 @@
 
 .location-overview {
   padding: 1rem 0;
-}
+}*/

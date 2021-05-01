@@ -6,24 +6,10 @@ export interface Location {
   bannerImageURL: string,
   weatherType: string,
   costs: {
-    bread: number,
-    cappuccino: number,
-    cinema: number,
-    beer: number,
-    monthlyPublicTransport: number,
-    restaurantPrice: number,
-    taxi: number,
+    [key: string]: number,
   },
   scores: {
-    cityScore: number,
-    travelConnectivity: number,
-    commute: number,
-    safety: number,
-    healthcare: number,
-    environmentalQuality: number,
-    internetAccess: number,
-    leisureAndCulture: number,
-    tolerance: number,
+    [key: string]: number
   },
   coordinates: {
     latitude: number,

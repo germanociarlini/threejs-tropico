@@ -18,8 +18,8 @@ export class Scene extends React.Component {
     azimuth: 0.220
   }
 
-  private mouseX: number
-  private mouseY: number
+  private mouseX = 0
+  private mouseY = 0
 
   constructor(props: any) {
     super(props)
