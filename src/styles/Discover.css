@@ -13,13 +13,9 @@
 }
 
 .destinations-content {
-  display: grid;
-  grid-template-columns: 100% 0%;
-  transition: grid-template-columns 0.25s;
-  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
   height: 100%;
-}
-
-.show {
-  grid-template-columns: 50% 50%;
+  padding: 0.5rem;
 }

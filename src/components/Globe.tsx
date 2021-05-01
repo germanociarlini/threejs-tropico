@@ -42,13 +42,13 @@ export class Globe extends React.Component {
   public componentDidMount() {
     window.addEventListener('load', this.handleOnLoad)
     window.addEventListener('mousemove', this.handleOnMouseMove)
-    window.addEventListener('click', this.handleOnMouseClick)
+    window.addEventListener('click', this.handleOnClick)
   }
 
   public componentWillUnmount() {
     window.removeEventListener('load', this.handleOnLoad);
     window.removeEventListener('mousemove', this.handleOnMouseMove)
-    window.removeEventListener('click', this.handleOnMouseClick)
+    window.removeEventListener('click', this.handleOnClick)
   }
 
   private handleOnLoad = () => {
@@ -84,7 +84,7 @@ export class Globe extends React.Component {
     }
   }
 
-  private handleOnMouseClick = () => {
+  private handleOnClick = () => {
     this.raycaster.setFromCamera(this.mouseCoords, this.camera)
     const intersects = this.raycaster.intersectObjects(this.locationsGroup.children);
     if (intersects[0]) {
@@ -230,7 +230,13 @@ export class Globe extends React.Component {
 
   render() {
     return (
-      <div id="globe-container"></div>
+      <div id="globe-container">
+        <div className="controls-container">
+          <span>Left Mouse to Rotate</span>
+          <span>Scroll Wheel to Zoom In and Out</span>
+          <span>Click on a Location to Discover it</span>
+        </div>
+      </div>
     )
   }
 }

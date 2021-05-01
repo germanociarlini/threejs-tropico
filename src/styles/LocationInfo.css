@@ -1,14 +1,24 @@
+.location-card {
+  width: 100%;
+}
+
+.select-location {
+  font-family: "Staatliches", cursive;
+  color: var(--tropican-beige);
+  text-align: center;
+}
+
 .grid-container {
   display: grid;
-  grid-template-rows: 1.2fr 0.6fr 4fr;
-  grid-template-columns: 5fr 1fr;
+  grid-template-rows: 1.2fr 60px 4fr;
+  grid-template-columns: 5fr 60px;
   grid-template-areas:
     "banner banner"
     "general-info general-score"
     "info-container info-container";
 
   color: var(--tropican-beige);
-  opacity: 90%;
+  column-gap: 10px;
 }
 
 /* Banner */
@@ -47,6 +57,8 @@
   place-content: center;
   text-align: center;
   font-family: "Staatliches", cursive;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .general-score {

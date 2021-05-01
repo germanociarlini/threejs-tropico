@@ -7,30 +7,43 @@ import { Location } from '../types';
 
 export class LocationInfo extends React.Component {
   public static contextType = LocationContext
-  render() {
-    let sortedScores: string[] = []
-    const { cityName, regionName, bannerImageURL, summary, weatherType, costs, scores } = (this.context.state.selectedLocation as Location) || {}
 
-    if (scores !== undefined) {
-      sortedScores = Object.keys(scores).sort((a: string, b: string) => { return scores[b] - scores[a] })
-    }
-
-    return (
-      <div className="grid-container">
-        <div className="banner" style={{ backgroundImage: `url('${bannerImageURL}')` }}>
-          <div className="text-scrim">
-            <span className='banner-title'>{cityName}</span>
-            <span className='banner-subtitle'>{regionName}</span>
+  public renderLocationInfoCard = (selectedLocation: Location) => {    
+    if (selectedLocation.id) {
+      const { cityName, regionName, bannerImageURL, summary, weatherType, costs, scores } = selectedLocation
+      const sortedScores = Object.keys(scores).sort((a: string, b: string) => { return scores[b] - scores[a] })
+      return (
+        <div className="grid-container">
+          <div className="banner" style={{ backgroundImage: `url('${bannerImageURL}')` }}>
+            <div className="text-scrim">
+              <span className='banner-title'>{cityName}</span>
+              <span className='banner-subtitle'>{regionName}</span>
+            </div>
+          </div>
+          <div className="general-info">
+            <span className='weather-span'>{weatherType}</span>
+            <span className='weather-span'>{sortedScores[1] || ''} - {sortedScores[2] || ''} - {sortedScores[3] || ''}</span>
+          </div>
+          <div className="general-score"></div>
+          <div className="info-container">
+            <span className="summary" dangerouslySetInnerHTML={{ __html: summary }} />
           </div>
         </div>
-        <div className="general-info">
-          <span className='weather-span'>{weatherType}</span>
-          <span className='weather-span'>{sortedScores[1] || ''} - {sortedScores[2] || ''} - {sortedScores[3] || ''}</span>
+      )
+    } else {
+      return (
+        <div className="select-location">
+          <span>Select a Location to Discover it!</span>
         </div>
-        <div className="general-score"></div>
-        <div className="info-container">
-          <span className="summary" dangerouslySetInnerHTML={{ __html: summary }} />
-        </div>
+      )
+    }
+  }
+
+  render() {
+    const selectedLocation = this.context.state.selectedLocation as Location || {}
+    return (
+      <div className={`location-card ${selectedLocation.id ? 'show' : ''}`}>
+        {this.renderLocationInfoCard(selectedLocation)}
       </div>
     )
   }
