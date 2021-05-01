@@ -8,23 +8,27 @@ import { Location } from '../types';
 export class LocationInfo extends React.Component {
   public static contextType = LocationContext
 
-  public renderLocationInfoCard = (selectedLocation: Location) => {    
+  public renderLocationInfoCard = (selectedLocation: Location) => {
     if (selectedLocation.id) {
       const { cityName, regionName, bannerImageURL, summary, weatherType, costs, scores } = selectedLocation
       const sortedScores = Object.keys(scores).sort((a: string, b: string) => { return scores[b] - scores[a] })
+      const cityScore = Math.round(scores['cityScore'])
       return (
         <div className="grid-container">
           <div className="banner" style={{ backgroundImage: `url('${bannerImageURL}')` }}>
-            <div className="text-scrim">
+            <div className='banner-text scrim'>
               <span className='banner-title'>{cityName}</span>
               <span className='banner-subtitle'>{regionName}</span>
             </div>
           </div>
           <div className="general-info">
-            <span className='weather-span'>{weatherType}</span>
-            <span className='weather-span'>{sortedScores[1] || ''} - {sortedScores[2] || ''} - {sortedScores[3] || ''}</span>
+            <span>{weatherType}</span>
+            <span>{sortedScores[1] || ''} - {sortedScores[2] || ''} - {sortedScores[3] || ''}</span>
           </div>
-          <div className="general-score"></div>
+          <div className="city-score-container scrim" style={{ backgroundColor: `${cityScore < 50 ? 'var(--tropican-sunset)' : 'var(--tropican-lime)'}` }}>
+            <span className="city-score-label">City Score</span>
+            <span className="city-score-value">{cityScore}</span>
+          </div>
           <div className="info-container">
             <span className="summary" dangerouslySetInnerHTML={{ __html: summary }} />
           </div>
