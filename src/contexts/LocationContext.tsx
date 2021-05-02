@@ -106,21 +106,11 @@ class LocationContextProvider extends React.Component<LocationContextProps, Loca
 
       const [cityName, regionName, countryName] = cityInfo.full_name.split(/,/)
 
-      const simplifiedScores = urbanAreaScores.categories.reduce<{[name: string]: number}>((scores, category) => {
-        scores[category.name] = category.score_out_of_10;
-        return scores
-      }, {})
-
-      const costs = urbanAreaDetails.categories.find((category: Category) => category.id === 'COST-OF-LIVING')
-      const simplifiedCosts = costs?.data.reduce<{[id: string]: number}>((costs, data) => {
-        costs[data.id] = data.currency_dollar_value!
-        return costs
-      }, {})
+      const scores = urbanAreaScores.categories
+      const costs = urbanAreaDetails.categories.find((category) => category.id === 'COST-OF-LIVING')!.data
 
       const climate = urbanAreaDetails.categories.find((category: Category) => category.id === 'CLIMATE')
       const weatherType = climate?.data.find((weatherData: Datum) => weatherData.id === 'WEATHER-TYPE')?.string_value
-
-      //summary: urbanAreaScores.summary.replace(/\n|\t|<.>|<..>/g, '').split(/ {4}/)[1],
 
       const location: Location = {
         id: urbanArea.ua_id,
@@ -129,26 +119,9 @@ class LocationContextProvider extends React.Component<LocationContextProps, Loca
         summary: urbanAreaScores.summary,
         bannerImageURL: urbanAreaImages.photos[0].image.web,
         weatherType: weatherType || '',
-        costs: {
-          bread: (simplifiedCosts) ? simplifiedCosts['COST-BREAD'] : 0,
-          cappuccino: (simplifiedCosts) ? simplifiedCosts['COST-CAPUCCINO'] : 0,
-          cinema: (simplifiedCosts) ? simplifiedCosts['COST-CINEMA']: 0,
-          beer: (simplifiedCosts) ? simplifiedCosts['COST-IMPORT-BEER'] : 0,
-          monthlyPublicTransport: (simplifiedCosts) ? simplifiedCosts['COST-PUBLIC-TRANSPORT'] : 0,
-          restaurantPrice: (simplifiedCosts) ? simplifiedCosts['COST-RESTAURANT-MEAL'] : 0,
-          taxi: (simplifiedCosts) ? simplifiedCosts['COST-TAXI'] : 0,
-        },
-        scores: {
-          cityScore: urbanAreaScores.teleport_city_score,
-          'Travel Connectivity': (simplifiedScores) ? simplifiedScores['Travel Connectivity'] : 0,
-          'Commute': (simplifiedScores) ? simplifiedScores['Commute'] : 0,
-          'Safety': (simplifiedScores) ? simplifiedScores['Safety'] : 0,
-          'Healthcare': (simplifiedScores) ? simplifiedScores['Healthcare'] : 0,
-          'Environmental Quality': (simplifiedScores) ? simplifiedScores['Environmental Quality'] : 0,
-          'Internet Access': (simplifiedScores) ? simplifiedScores['Internet Access'] : 0,
-          'Leisure & Culture': (simplifiedScores) ? simplifiedScores['Leisure & Culture'] : 0,
-          'Tolerance': (simplifiedScores) ? simplifiedScores['Tolerance'] : 0,
-        },
+        costs: costs,
+        cityScore: urbanAreaScores.teleport_city_score,
+        categoryScores: scores,
         coordinates: {
           latitude: cityInfo.location.latlon.latitude,
           longitude: cityInfo.location.latlon.longitude

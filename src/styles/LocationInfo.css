@@ -10,12 +10,13 @@
 
 .grid-container {
   display: grid;
-  grid-template-rows: 1.2fr 60px 4fr;
+  grid-template-rows: 1.2fr 60px 2fr 2fr;
   grid-template-columns: 5fr 90px;
   grid-template-areas:
     "banner banner"
     "general-info general-score"
-    "info-container info-container";
+    "summary-container summary-container"
+    "scores-container scores-container";
 
   color: var(--tropican-beige);
   column-gap: 10px;
@@ -86,8 +87,12 @@
 }
 
 /* Summary and Dashboard */
-.info-container {
-  grid-area: info-container;
+.summary-container {
+  grid-area: summary-container;
+}
+
+.scores-container {
+  grid-area: scores-container;
 }
 
 /*.info-container {

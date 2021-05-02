@@ -5,12 +5,9 @@ export interface Location {
   summary: string,
   bannerImageURL: string,
   weatherType: string,
-  costs: {
-    [key: string]: number,
-  },
-  scores: {
-    [key: string]: number
-  },
+  costs: Datum[],
+  cityScore: number,
+  categoryScores: ScoreCategory[],
   coordinates: {
     latitude: number,
     longitude: number
@@ -223,7 +220,7 @@ export enum Type {
 
 export interface UrbanAreaScores {
   _links:              Links;
-  categories:          Category[];
+  categories:          ScoreCategory[];
   summary:             string;
   teleport_city_score: number;
 }
@@ -243,7 +240,7 @@ export interface Self {
   href: string;
 }
 
-export interface Category {
+export interface ScoreCategory {
   color:           string;
   name:            string;
   score_out_of_10: number;
