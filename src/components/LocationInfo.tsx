@@ -1,9 +1,8 @@
-import { faCity } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { LocationContext } from "../contexts/LocationContext";
 import '../styles/LocationInfo.css';
 import { Location, ScoreCategory } from '../types';
+import LocationInfoDashboard from "./LocationInfoDashboard";
 
 export class LocationInfo extends React.Component {
   public static contextType = LocationContext
@@ -32,8 +31,8 @@ export class LocationInfo extends React.Component {
           <div className="summary-container">
             <span className="summary" dangerouslySetInnerHTML={{ __html: summary }} />
           </div>
-          <div className="scores-container">
-            <span>SCORES GO HERE :)</span>
+          <div className="dashboard-container">
+            <LocationInfoDashboard scores={sortedScores} costs={costs} />
           </div>
         </div>
       )
@@ -49,8 +48,10 @@ export class LocationInfo extends React.Component {
   render() {
     const selectedLocation = this.context.state.selectedLocation as Location || {}
     return (
-      <div className={`location-card ${selectedLocation.id ? 'show' : ''}`}>
-        {this.renderLocationInfoCard(selectedLocation)}
+      <div className="location-card">
+        <div className="card-scroll-container">
+          {this.renderLocationInfoCard(selectedLocation)}
+        </div>
       </div>
     )
   }
