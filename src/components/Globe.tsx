@@ -93,10 +93,8 @@ export class Globe extends React.Component {
       if (selectedLocation !== undefined) {
         this.context.setSelectedLocation(selectedLocation)
         this.focusOnLocation(locationObject)
-        return
       }
     }
-    this.context.setSelectedLocation(null)
   }
 
   private initializeRenderer() {
