@@ -64,6 +64,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 8px;
+  transition: background-image 0.25s linear;
 }
 
 .banner-text {
