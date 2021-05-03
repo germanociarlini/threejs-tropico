@@ -107,7 +107,7 @@ class LocationContextProvider extends React.Component<LocationContextProps, Loca
       const [cityName, regionName, countryName] = cityInfo.full_name.split(/,/)
 
       const scores = urbanAreaScores.categories
-      const costs = urbanAreaDetails.categories.find((category) => category.id === 'COST-OF-LIVING')!.data
+      const costs = urbanAreaDetails.categories.find((category) => category.id === 'COST-OF-LIVING')!.data.filter((data: Datum) => data.currency_dollar_value !== undefined)
 
       const climate = urbanAreaDetails.categories.find((category: Category) => category.id === 'CLIMATE')
       const weatherType = climate?.data.find((weatherData: Datum) => weatherData.id === 'WEATHER-TYPE')?.string_value

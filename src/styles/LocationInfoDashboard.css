@@ -9,6 +9,8 @@
   flex-direction: column;
   width: 100%;
   font-family: "Staatliches", cursive;
+  font-size: 1.1rem;
+  row-gap: 5px;
 }
 
 .score-entry {
@@ -23,9 +25,15 @@
   grid-area: score-bar;
   height: 2px;
   transition: width 0.25s ease-out;
+  box-shadow: 0rem 0rem 10px 1px rgb(255 255 255 / 40%)
 }
 
 .cost-entry {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px dashed var(--tropican-beige);
+}
+
+.cost-entry:first-child {
+  border-top: 1px dashed var(--tropican-beige);
 }

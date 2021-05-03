@@ -72,7 +72,6 @@ export class Globe extends React.Component {
       this.camera.updateProjectionMatrix()
 
       this.renderer.setSize(width, height)
-      console.log('resizing')
     }
   }
 
