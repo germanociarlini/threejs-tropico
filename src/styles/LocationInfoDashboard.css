@@ -1,8 +1,7 @@
 .dashboard {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  column-gap: 10px;
+  flex-direction: column;
+  row-gap: 10px;
 }
 
 .dashboard-section {
@@ -13,8 +12,17 @@
 }
 
 .score-entry {
-  display: flex;
+  display: grid;
+  grid-template-areas: 
+    "score-name score-value"
+    "score-bar score-bar";
   justify-content: space-between;
+}
+
+.score-bar {
+  grid-area: score-bar;
+  height: 2px;
+  transition: width 0.25s ease-out;
 }
 
 .cost-entry {

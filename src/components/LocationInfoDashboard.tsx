@@ -17,6 +17,7 @@ export default class LocationInfoDashboard extends Component<DashboardProps, {}>
               <div key={i} className="score-entry">
                 <span>{score.name}</span>
                 <span>{score.score_out_of_10.toFixed(2)}</span>
+                <div className="score-bar" style={{backgroundColor: `${score.color}`, width:`${score.score_out_of_10/10 * 100}%`}}></div>
               </div>
             )
           })}
@@ -26,7 +27,7 @@ export default class LocationInfoDashboard extends Component<DashboardProps, {}>
             return (
               <div key={i} className="cost-entry">
                 <span>{cost.label}</span>
-                <span>{cost.currency_dollar_value}</span>
+                <span>{cost.currency_dollar_value?.toFixed(2)}</span>
               </div>
             )
           })}
