@@ -11,14 +11,24 @@ export default class LocationInfoDashboard extends Component<DashboardProps, {}>
   render() {
     return (
       <div className='dashboard'>
-        <div id="scores-container" className="dashboard-container">
+        <div id="scores-container" className="dashboard-section">
           {this.props.scores.map((score: ScoreCategory, i: number) => {
-            return (<div key={i} className="score-entry">{score.name}</div>)
+            return (
+              <div key={i} className="score-entry">
+                <span>{score.name}</span>
+                <span>{score.score_out_of_10.toFixed(2)}</span>
+              </div>
+            )
           })}
         </div>
-        <div id="costs-container" className="dashboard-container">
+        <div id="costs-container" className="dashboard-section">
           {this.props.costs.map((cost: Datum, i: number) => {
-            return (<div key={i} className="score-entry">{cost.label}</div>)
+            return (
+              <div key={i} className="cost-entry">
+                <span>{cost.label}</span>
+                <span>{cost.currency_dollar_value}</span>
+              </div>
+            )
           })}
         </div>
       </div>

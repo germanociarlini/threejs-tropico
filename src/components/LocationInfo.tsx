@@ -10,7 +10,7 @@ export class LocationInfo extends React.Component {
   public renderLocationInfoCard = (selectedLocation: Location) => {
     if (selectedLocation.id) {
       const { cityName, regionName, bannerImageURL, summary, weatherType, costs, cityScore, categoryScores } = selectedLocation
-      const sortedScores = categoryScores.sort((a: ScoreCategory, b: ScoreCategory) => { return a.score_out_of_10 - b.score_out_of_10 })
+      const sortedScores = categoryScores.sort((a: ScoreCategory, b: ScoreCategory) => { return b.score_out_of_10 - a.score_out_of_10 })
 
       return (
         <div className="grid-container">

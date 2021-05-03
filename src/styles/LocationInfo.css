@@ -130,6 +130,10 @@
   grid-area: summary-container;
 }
 
+.summary {
+  text-align: justify;
+}
+
 .dashboard-container {
   grid-area: dashboard-container;
 }

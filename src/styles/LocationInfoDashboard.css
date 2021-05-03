@@ -1,9 +1,23 @@
 .dashboard {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  column-gap: 10px;
 }
 
-.dashboard-container {
+.dashboard-section {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  font-family: "Staatliches", cursive;
+}
+
+.score-entry {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cost-entry {
+  display: flex;
+  justify-content: space-between;
 }
