@@ -1,7 +1,7 @@
 .location-card {
   position: relative;
   overflow: auto;
-  width: 100%;
+  transition: width 0.25s ease-out;
 }
 
 .location-card::-webkit-scrollbar {
@@ -58,6 +58,19 @@
   column-gap: 10px;
 }
 
+.close-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 8px;
+  background-color: rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 15px var(--tropican-black);
+}
+
+.close-button:hover {
+  color: var(--tropican-darkred);
+}
+
 /* Banner */
 .banner {
   grid-area: banner;
@@ -82,7 +95,7 @@
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 5rem rgba(0, 0, 0, 0.5);
   font-family: "Dancing Script", cursive;
-  text-shadow: 0 0 10px black, 1px 1px 1px black;
+  text-shadow: 0 0 10px black, 1px 1px 5px black;
 }
 
 .banner-title {

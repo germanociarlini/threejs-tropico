@@ -1,3 +1,5 @@
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { LocationContext } from "../contexts/LocationContext";
 import '../styles/LocationInfo.css';
@@ -6,6 +8,10 @@ import LocationInfoDashboard from "./LocationInfoDashboard";
 
 export class LocationInfo extends React.Component {
   public static contextType = LocationContext
+
+  public closeLocationInfoCard = () => {
+    this.context.setSelectedLocation(null)
+  }
 
   public renderLocationInfoCard = (selectedLocation: Location) => {
     if (selectedLocation.id) {
@@ -34,13 +40,12 @@ export class LocationInfo extends React.Component {
           <div className="dashboard-container">
             <LocationInfoDashboard scores={sortedScores} costs={costs} />
           </div>
+          <FontAwesomeIcon icon={faChevronRight} onClick={this.closeLocationInfoCard} className={'close-button'} />
         </div>
       )
     } else {
       return (
-        <div className="select-location">
-          <span>Select a Location to Discover it!</span>
-        </div>
+        <></>
       )
     }
   }
@@ -48,7 +53,7 @@ export class LocationInfo extends React.Component {
   render() {
     const selectedLocation = this.context.state.selectedLocation as Location || {}
     return (
-      <div className="location-card">
+      <div className="location-card" style={{ width: `${selectedLocation.id ? '100%' : '0%'}` }}>
         <div className="card-scroll-container">
           {this.renderLocationInfoCard(selectedLocation)}
         </div>

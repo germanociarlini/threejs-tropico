@@ -49,12 +49,14 @@ export class Globe extends React.Component {
     window.removeEventListener('load', this.handleOnLoad);
     window.removeEventListener('mousemove', this.handleOnMouseMove)
     window.removeEventListener('click', this.handleOnClick)
+    this.container?.removeEventListener('animationiteration', this.handleContainerResize)
   }
 
   private handleOnLoad = () => {
     this.container = document.getElementById("globe-container") as HTMLDivElement
     if (this.container) {
       new ResizeObserver(this.handleContainerResize).observe(this.container)
+      this.container.addEventListener('animationiteration', this.handleContainerResize)
       this.initializeRenderer()
       this.setupScene()
       this.setupLights()
@@ -72,6 +74,7 @@ export class Globe extends React.Component {
       this.camera.updateProjectionMatrix()
 
       this.renderer.setSize(width, height)
+      this.renderer.render(this.scene, this.camera)
     }
   }
 
