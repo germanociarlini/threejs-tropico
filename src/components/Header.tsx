@@ -22,7 +22,7 @@ export class Header extends React.Component {
                 <a className="header-section" href="#discover">discover</a>
               </li>
               <li>
-                <a className="header-section" href="#about">tropico</a>
+                <a className="header-section" href="#about">about</a>
               </li>
               <li>
                 <a className="header-section" href="#contact">contact</a>
